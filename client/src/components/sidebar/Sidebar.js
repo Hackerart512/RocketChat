@@ -7,7 +7,7 @@ const SIdebar = () => {
     return (
         <>
             <div className="sidebar w-[100px]">
-                <div className="logo my-5">
+                <div className="logo mt-2">
                     <img src="./images/logo.png"></img>
                 </div>
                 <div className="sidebar-menu">

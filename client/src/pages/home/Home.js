@@ -4,19 +4,26 @@ import Sidebar from '../../components/sidebar/Sidebar';
 import ChatCard from '../../components/chat_card/ChatCard';
 import Header from '../../components/header/Header';
 import WrittenChatCard from '../../components/written_chat_card/WrittenChatCard';
-
+import { useSocket } from "../../context/SocketProvider";
+// import AccessAlarmIcon from '@mui/icons-material/AccessAlarm';
 
 const Home = () => {
+
+    const socket = useSocket();
+
+    let name = socket.account;
+    console.log(name);
+
     return (
         <>
             <div className="main-wrapper ">
 
                 <Sidebar />
 
-                <div className="sidebar-group ml-[83px] p-3  w-[324px] bg-[#fafbff]">
+                <div className="sidebar-group ml-[83px] p-3  w-[407px] bg-[#fafbff] overflow-y-scroll h-[100vh]">
                     {/* top header components */}
                     <div className="flex justify-between items-center px-2">
-                        <div className="uppercase  text-[12px] text-[--themeColor] font-extrabold">chats</div>
+                        <div className="uppercase  text-[12px] text-[--themeColor] font-extrabold">chats </div>
                         <div className="">
                             <ul className="flex">
                                 <li className=""><i className="fa-solid fa-users text-[--themeColor] text-[12px] mx-1 border-[#f3f3f3] border-[1px] p-1 rounded-sm"></i></li>
@@ -80,9 +87,13 @@ const Home = () => {
 
                     {/* chats container */}
                     <div className="chat-container px-2">
+
+
                         <ChatCard images="avatar-13.jpg" name="Regina Dickerson" msg="It seems logical that the" online={true} />
 
-                        <ChatCard images="avatar-8.jpg" name="Forest Kroch" msg="It seems logical that the" />
+                        <ChatCard images="avatar-13.jpg" name="Regina Dickerson" msg="It seems logical that the" online={true} />
+
+                        {/* <ChatCard images="avatar-8.jpg" name="Forest Kroch" msg="It seems logical that the" />
 
                         <ChatCard images="avatar-8.jpg" name="Regina Dickerson" msg="It seems logical that the" online={true} />
 
@@ -92,7 +103,7 @@ const Home = () => {
 
                         <ChatCard images="avatar-8.jpg" name="Regina Dickerson" msg="It seems logical that the" />
 
-                        <ChatCard images="avatar-13.jpg" name="Regina Dickerson" msg="It seems logical that the" />
+                        <ChatCard images="avatar-13.jpg" name="Regina Dickerson" msg="It seems logical that the" /> */}
 
 
                     </div>
@@ -101,9 +112,9 @@ const Home = () => {
 
                 </div>
 
-                <div className="chat w-[72vw]">
+                <div className="chat w-[75vw] overflow-y-scroll">
                     <Header />
-                    <div className="chatting-container p-4 h-[76vh] overflow-y">
+                    <div className="chatting-container p-4 h-[76vh] ">
                         <WrittenChatCard sender={true} name="nitin" message="Vo hi kr rha" />
                         <WrittenChatCard name="pavan" message="ss bhej group me kitna kiya" />
 
@@ -116,8 +127,25 @@ const Home = () => {
 
                     </div>
 
-                    <div className="chat-send-container shadow-sm border-[1px] m-4">
-                        <input type="text" />
+                    <div className="w-[68vw] chat-send-container p-4 position-fixed bottom-[0px] bg-white">
+
+                        <div className="chat-send-innerbox shadow-sm border-[1px]  h-[50px] rounded-[88px] flex items-center justify-center">
+
+                            <form className="flex items-center justify-between w-[100%]">
+                                <div className='left-side-sendbox'>
+
+                                    <i className='fa-solid fa-smile'></i>
+                                    <i className='text-[20px] fa-solid fa-paperclip'></i>
+                                    <input className='mx-4' placeholder='Enter message...' type="text" />
+                                </div>
+
+                                <div className='right-side-sendbox'>
+                                    <button className=' send-button rounded-full bg-[#ee00ab] text-white   m-1'>
+                                        {`>`}
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
