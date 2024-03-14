@@ -5,6 +5,7 @@ const { body, validationResult } = require('express-validator');
 const bcrypt = require('bcryptjs')
 var jwt = require('jsonwebtoken');
 const User = require('../model/User');
+const Contact = require('../model/ContactList');
 const fetchuser = require('../middleware/fetchuser');
 
 // it's my secret key for encripted and decripted our msg
@@ -116,7 +117,7 @@ router.post('/getuser', fetchuser, async (req, res) => {
 })
 
 //Route :4   followind array by the user.
-router.post('/follow', fetchuser, async (req, res) => {
+router.post('/following', fetchuser, async (req, res) => {
     try {
         let success = false;
 
@@ -146,8 +147,134 @@ router.post('/follow', fetchuser, async (req, res) => {
 
     } catch (err) {
         console.log(err);
-        return red.status(404).json({ message: '' });
+        return res.status(404).json({ message: '' });
     }
+});
+
+
+//Route :5   followind array by the user. Add another friend into the your chat list
+router.post('/follow', fetchuser, async (req, res) => {
+    try {
+        let success = false;
+
+        const { email, name, nickname, phoneNumber } = req.body;
+        const userId = req.user.id;
+
+        const user = await User.findOne({ email: email });
+
+        const account = await User.findById(userId).select("-password");
+
+
+        if (!account) {
+            return res.status(404).json({ user, success, message: "User not found on Rocket Chat" })
+        }
+
+        if (!user) {
+            return res.status(404).json({ user, success, message: "User not found on Rocket Chat" })
+        }
+
+        const friendId = user._id;
+        const userContactList = await Contact.find({user: userId})
+
+
+
+       
+        // console.log(account)
+
+        if (account.contacts.includes(friendId)) {
+            return res.status(404).json({ success, message: "User already Exits user" })
+        }
+
+
+        // Add Contact details for each unique person.
+        //create new users
+        contactList = await Contact.create({
+            user: req.user.id,
+            contactId: friendId,
+            nickname: req.body.nickname,
+            name: req.body.name,
+            phoneNumber: req.body.phoneNumber,
+        });
+
+
+        account.contacts.push(friendId);
+        await account.save();
+
+        success = true;
+        res.status(200).json({ success, account, message: 'Success Fully update and added contact in contact list' });
+
+    } catch (err) {
+        console.log(err);
+        return res.status(404).json({ message: 'internal server error' });
+    }
+});
+
+//Route :6   unfollow array by the user. Remove another friend into the your chat list
+router.post('/unfollow', fetchuser, async (req, res) => {
+    try {
+        let success = false;
+
+        const { email } = req.body;
+        const userId = req.user.id;
+
+        const user = await User.findOne({ email: email });
+
+        const account = await User.findById(userId).select("-password");
+
+        if (!account) {
+            return res.status(404).json({ user, success, message: "User not found on Rocket Chat" })
+        }
+
+        if (!user) {
+            return res.status(404).json({ user, success, message: "User not found on Rocket Chat" })
+        }
+
+        const friendId = user._id;
+        console.log(account)
+
+        if (!account.contacts.includes(friendId)) {
+            return res.status(404).json({ success, message: "User Deleted on your contact list" })
+        }
+
+        account.contacts.pull(friendId);
+        await account.save();
+
+        const removeContact = await Contact.deleteOne({ user: userId })
+
+        const userContactList = await Contact.find({ user: userId })
+
+        if (!userContactList) {
+            return res.status(404).json({ user, success, message: "User already Exits in Contact List" })
+        }
+
+        success = true;
+        res.status(200).json({ success, account, friendId, message: '' });
+
+    } catch (err) {
+        console.log(err);
+        return res.status(404).json({ message: '' });
+    }
+});
+
+//Route :7   Show only added contact on chat
+router.get('/mycontact', fetchuser, async (req, res) => {
+    try {
+        let success = false;
+        // const user = await User.findById(req.params.id);
+        const user = await User.findById(req.user.id);
+
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+
+        // Extract followed users IDs
+        const contactUserIds = user.contacts.map(user => user._id);
+
+        const contactLists = await User.find({ _id: { $in: contactUserIds } }).sort({ createdAt: -1 }).sort({ date: -1 });
+
+        success = true;
+        res.json({ success, contactLists, message: 'contact Post only' });
+    } catch (err) { console.log(err); }
 });
 
 

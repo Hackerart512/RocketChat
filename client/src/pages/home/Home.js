@@ -1,18 +1,25 @@
-import React from 'react';
+import React, { useState } from 'react';
 import "./home.css";
 import Sidebar from '../../components/sidebar/Sidebar';
 import ChatCard from '../../components/chat_card/ChatCard';
 import Header from '../../components/header/Header';
 import WrittenChatCard from '../../components/written_chat_card/WrittenChatCard';
 import { useSocket } from "../../context/SocketProvider";
+import AddFriend from '../../components/add_friend/AddFriend';
 // import AccessAlarmIcon from '@mui/icons-material/AccessAlarm';
 
 const Home = () => {
 
     const socket = useSocket();
 
-    let name = socket.account;
-    console.log(name);
+    const Contact = socket.contactList.contactLists;
+    console.log(Contact);
+
+    const [modalActive, setModalActive] = useState(false);
+
+    const modalActiveFunction = () => {
+        return setModalActive(!modalActive);
+    }
 
     return (
         <>
@@ -27,7 +34,10 @@ const Home = () => {
                         <div className="">
                             <ul className="flex">
                                 <li className=""><i className="fa-solid fa-users text-[--themeColor] text-[12px] mx-1 border-[#f3f3f3] border-[1px] p-1 rounded-sm"></i></li>
-                                <li className=""><i className="fa-solid fa-plus text-[--themeColor] mx-1 text-[12px] border-[#f3f3f3] border-[1px] p-1 rounded-sm"></i></li>
+
+                                <li onClick={modalActiveFunction} className=""><i className="fa-solid fa-plus text-[--themeColor] mx-1 text-[12px] border-[#f3f3f3] border-[1px] p-1 rounded-sm cursor-pointer" ></i></li>
+
+                                {modalActive && <AddFriend onClick={modalActiveFunction} />}
                             </ul>
                         </div>
                     </div>
@@ -75,7 +85,7 @@ const Home = () => {
                         </div>
                     </div>
 
-                    <div className="flex justify-between items-center my-5 px-2">
+                    <div className="flex justify-between items-center my-3 px-2">
                         <div className="uppercase  text-[12px] text-[--themeColor] font-extrabold">RECENT CHATS</div>
                         <div className="">
                             <ul className="flex">
@@ -88,10 +98,13 @@ const Home = () => {
                     {/* chats container */}
                     <div className="chat-container px-2">
 
+                         
 
                         <ChatCard images="avatar-13.jpg" name="Regina Dickerson" msg="It seems logical that the" online={true} />
 
                         <ChatCard images="avatar-13.jpg" name="Regina Dickerson" msg="It seems logical that the" online={true} />
+
+
 
                         {/* <ChatCard images="avatar-8.jpg" name="Forest Kroch" msg="It seems logical that the" />
 

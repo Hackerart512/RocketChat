@@ -18,10 +18,18 @@ const userSchema = new Schema({
         required: true
     },
 
-    // following: [{
-    //     type: mongoose.Schema.Types.ObjectId,
-    //     ref: "User"
-    // }],
+    // Refrence to other user documents
+    contacts: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User"
+    }],
+
+    // Profile 
+    profile:{
+        fullName: String,
+        nickname: String,
+        phoneNumber: String,
+    },
 
     date: {
         type: Date,
