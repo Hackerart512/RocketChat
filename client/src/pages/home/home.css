@@ -17,20 +17,29 @@
     margin: 0px 20px;
 }
 
-:-webkit-scrollbar-track{
-    background:green;
-    width: 2px;
+.sidebar-group{
+overflow-y: scroll;
 }
 
-::-webkit-scrollbar-thumb{
-    background:red
+.chat::-webkit-scrollbar, #slider-scroll::-webkit-scrollbar{
+    width: 12px;
+    
 }
 
-::-webkit-scrollbar-corner{
-    background:red
+.chat::-webkit-scrollbar-track, #slider-scroll::-webkit-scrollbar-track{
+    background:transparent
+}
+
+.chat::-webkit-scrollbar-thumb, #slider-scroll::-webkit-scrollbar-thumb{
+    background:#ebebeb;
+}
+
+.chat::-webkit-scrollbar-corner{
+    border-radius: 50%;
 }
 
 .send-button{
     padding: 1px 12px;
     font-size: 26px;
 }
+

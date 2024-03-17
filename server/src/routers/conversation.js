@@ -3,15 +3,16 @@ const router = express.Router();
 const bodyParser = require('body-parser');
 const { body, validationResult } = require('express-validator');
 
-const Conversation = require('../middleware/conversation');
+const Conversation = require('../model/Conversation');
+ 
 
 router.use(bodyParser.json())
 
 
 //Route 1: 
 router.post('/add', [
-    body('senderId', "Enter a valid email").isLength({ max: 8 }),
-    body('receiverId', 'Enter a password').isLength({ max: 8 })
+    body('senderId', "Sender Id is not found").isLength({ min: 5 }),
+    body('receiverId', 'Riciever not Exits').isLength({ min: 5 })
 ], async function (req, res) {
     let success = false;
 
@@ -19,6 +20,7 @@ router.post('/add', [
     let receiverId = req.body.receiverId;
 
     const errors = validationResult(req);
+
     if (!errors.isEmpty()) {
         return res.status(400).json({ success, errors: errors.array() });
     }
@@ -26,8 +28,7 @@ router.post('/add', [
     const exist = await Conversation.findOne({ members: { $all: [receiverId, senderId] } })
 
     if (exist) {
-        response.status(200).json('conversation already exists');
-        return;
+        return res.status(200).json('conversation already exists');
     }
 
     const newConversation = new Conversation({
@@ -36,9 +37,10 @@ router.post('/add', [
 
     try {
         const savedConversation = await newConversation.save();
-        res.status(200).json(savedConversation);
+    
+        return res.status(200).json('conversation save succefully');
     } catch (error) {
-        res.status(500).json(error);
+        res.status(500).json(error.message);
     }
 
 })

@@ -1,23 +1,100 @@
-import React from 'react'
+const url = 'http://localhost:5000';
 
-const Api = () => {
-    return (
-         <>
-         </>
-    )
-}
 
 // Get our Contact
-const getContactList = async () => {
-    const response = await fetch('http://localhost:5000/api/auth/mycontact', {
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json',
-            'auth-token': `${localStorage.getItem('token')}`,
-        }
-    })
-    const json = await response.json();
-    return json;
+export const getContactList = async () => {
+    try {
+        const response = await fetch(`${url}/api/auth/mycontact`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'auth-token': `${localStorage.getItem('token')}`,
+            }
+        })
+        const json = await response.json();
+        return json;
+    } catch (error) {
+        console.log('Error while calling addUser API ', error);
+    }
 }
 
-export default { Api, getContactList }
+// set conversation   
+export const setConversation = async (data) => {
+    try {
+        const response = await fetch(`${url}/api/conversation/add`, {
+            method: 'POST',
+            body: JSON.stringify(
+                data
+            ),
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        })
+        const json = await response.json();
+        return json;
+    } catch (error) {
+        console.log('Error while calling addUser API ', error);
+    }
+}
+
+
+//////////////////////////////////////////
+// export const addUser = async (data) => {
+//     try {
+//         let response = await axios.post(`${url}/add`, data);
+//         return response.data;
+//     } catch (error) {
+//         console.log('Error while calling addUser API ', error);
+//     }
+// }
+
+// export const getUsers = async () => {
+//     try {
+//         let response = await axios.get(`${url}/users`);
+//         return response.data
+//     } catch (error) {
+//         console.log('Error while calling getUsers API ', error);
+//     }
+// }
+
+// export const setConversation = async (data) => {
+//     try {
+//         await axios.post(`${url}/conversation/add`, data);
+//     } catch (error) {
+//         console.log('Error while calling setConversation API ', error);
+//     }
+// }
+
+// export const getConversation = async (users) => {
+//     try {
+//         let response = await axios.post(`${url}/conversation/get`, users);
+//         return response.data;
+//     } catch (error) {
+//         console.log('Error while calling getConversation API ', error);
+//     }
+// }
+
+// export const getMessages = async (id) => {
+//     try {
+//         let response = await axios.get(`${url}/message/get/${id}`);
+//         return response.data
+//     } catch (error) {
+//         console.log('Error while calling getMessages API ', error);
+//     }
+// }
+
+// export const newMessages = async (data) => {
+//     try {
+//         return await axios.post(`${url}/message/add`, data);
+//     } catch (error) {
+//         console.log('Error while calling newConversations API ', error);
+//     }
+// }
+
+// export const uploadFile = async (data) => {
+//     try {
+//         return await axios.post(`${url}/file/upload`, data);
+//     } catch (error) {
+//         console.log('Error while calling newConversations API ', error);
+//     }
+// }

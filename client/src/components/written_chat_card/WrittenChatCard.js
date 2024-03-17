@@ -17,8 +17,8 @@ const WrittenChatCard = (props) => {
 
                         <div className="messages">
                             <div className="mx-3 message bg-[#5a078b] text-white flex flex-col items-start p-3 px-4">
-                                <p>{props.message}</p>
-                                <span className='text-'>{props.time}</span>
+                                <p  className='text-white' >{props.message}</p>
+                                <span className='text-white'>{props.time}</span>
                             </div>
                             <div className="mx-3 mt-1 text-left  text-[15px] text-[--themeColor] font-bold">
                                 {props.name}</div>
@@ -36,7 +36,7 @@ const WrittenChatCard = (props) => {
 
                         <div className="messages">
                             <div className="mx-3 message bg-[#e7eefe]   flex flex-col items-start p-3 px-4">
-                                <p>{props.message}</p>
+                                <p >{props.message}</p>
                                 <span className='text-'>10:00</span>
                             </div>
                             <div className="mx-3 mt-1 text-left  text-[15px] text-[--themeColor] font-bold">

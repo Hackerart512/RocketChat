@@ -1,16 +1,30 @@
 import React from 'react';
 import "./header.css";
 
-const Header = () => {
+
+const Header = ({ person }) => {
+
+
+
     return (
         <>
             <div className="header-section border-[1px] shadow-sm p-3 m-3 flex justify-between  rounded-md">
                 <div className='header-left flex items-center justify-center'>
-                    <img src="./images/avatar-13.jpg" alt="" className="w-[45px] rounded-full" />
+
+                    {
+                        person.images ?
+                            <img src={"./images/" + person.images} alt="" className="w-[45px] rounded-full" /> :
+                            <div className="w-[45px] h-[45px] bg-[#e8dbff] rounded-full flex items-center justify-center">
+                                <h3 className="font-bold text-[var(--themeColor)] ">{person.name[0]}</h3>
+                            </div>
+                    }
+
+                  
+                    {/* <img src="./images/avatar-13.jpg" alt="" className="w-[45px] rounded-full" /> */}
 
                     <div className="chat-content mx-2">
                         <div className="  text-[15px] text-[--themeColor] font-bold">
-                            Doris Brown</div>
+                            {person.name}</div>
                         <p className="text-[12px] text-left">online</p>
                     </div>
                 </div>

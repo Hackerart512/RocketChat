@@ -15,6 +15,8 @@ export const SocketProvider = (props) => {
 
   const [account, setAccount] = useState([]);
 
+  const [person, setPerson] = useState({});
+
   const [contactList, setContactList] = useState([])
 
 
@@ -46,18 +48,15 @@ export const SocketProvider = (props) => {
     const json = await response.json();
 
     await setContactList(json);
-   
-
   }
 
   useEffect(() => {
     userId()
     getContactList()
-
   }, []);
 
-  return (
-    <SocketContext.Provider value={{ account, contactList, getContactList }}>
+  return ( 
+    <SocketContext.Provider value={{ account, contactList, getContactList, person, setPerson }}>
       {props.children}
     </SocketContext.Provider>
   );

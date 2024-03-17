@@ -12,6 +12,8 @@ app.use(cors());
 
 app.use('/api/auth', require('./src/routers/auth'))
 
+app.use('/api/conversation', require('./src/routers/conversation'))
+
 app.get("/", (req, res)=>{
     res.send("hello");
 })
