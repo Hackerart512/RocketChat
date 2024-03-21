@@ -154,7 +154,7 @@ const Home = () => {
 
                 </div>
 
-                <div className="chat w-[75vw] overflow-y-scroll">
+                <div className="chat w-[75vw] h-[82vh] overflow-y-scroll">
 
                     {
                         Object.keys(person).length ? <Header person={person} /> : null

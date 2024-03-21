@@ -7,7 +7,11 @@ import { newMessage, getMessage } from "../../api/Api"
 const ChatBox = ({ person, conversation }) => {
 
     const [message, setMessag] = useState('');
+
+    const [chatMessages, setChatMessages] = useState([]);
     const { account } = useSocket();
+
+    const [toggle, setToggle] = useState(false);
 
     const sendText = async () => {
         let MessagesObject = {
@@ -19,30 +23,48 @@ const ChatBox = ({ person, conversation }) => {
         }
 
         await newMessage(MessagesObject);
-        setMessag("")
+        setMessag("");
+        setToggle(!toggle);
     }
 
     useEffect(() => {
+        // const getMessageDetails = async () => {
+        //     let data = await getMessage(conversation._id);
+        //     console.log(data);
+        // }
+
         const getMessageDetails = async () => {
-            let data = await getMessage(conversation._id);
-            console.log(data);
+            if (conversation && conversation._id) {
+                let data = await getMessage(conversation._id);
+                // console.log(data);
+                setChatMessages(data)
+            }
+        };
+
+        if (conversation && conversation._id) {
+            getMessageDetails();
         }
-        
-        conversation._id && getMessageDetails();
-    }, [person._id, conversation._id]);
+    }, [person._id, conversation, toggle]);
 
     return (
         <>
             <div className="chatting-container p-4 h-[76vh] ">
-                <WrittenChatCard sender={true} name="nitin" message="Vo hi kr rha" />
+                {/* <WrittenChatCard /> */}
+                {/* <WrittenChatCard sender={true} name="nitin" message="Vo hi kr rha" />
                 <WrittenChatCard name="pavan" message="ss bhej group me kitna kiya" />
 
                 <WrittenChatCard sender={true} name="nitin" message="Krta hu" />
                 <WrittenChatCard name="pavan" message="Kab krega bhai" />
-                <WrittenChatCard name="pavan" message="Good" />
-                <WrittenChatCard name="pavan" message="yesa bna skta he tu" />
+                
+            <WrittenChatCard sender={true} name="nitin" message="hmm" /> */}
 
-                <WrittenChatCard sender={true} name="nitin" message="hmm" />
+                {
+                    chatMessages && chatMessages.map(msg => {
+                        return (
+                            <WrittenChatCard  message={msg} />
+                        )
+                    })
+                }
 
             </div>
 
@@ -55,7 +77,7 @@ const ChatBox = ({ person, conversation }) => {
 
                             <i className='fa-solid fa-smile'></i>
                             <i className='text-[20px] fa-solid fa-paperclip'></i>
-                            <input value={message} onChange={(e) => setMessag(e.target.value)} className='mx-4' placeholder='Enter message...' type="text" />
+                            <input value={message} onChange={(e) => setMessag(e.target.value)} className='mx-4 border-none outline-none' placeholder='Enter message...' type="text" />
                         </div>
 
                         <div className='right-side-sendbox'>

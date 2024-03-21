@@ -8,6 +8,11 @@
     font-size: 14px;
     font-weight: 600;
 }
+.message2{
+    border-radius : 17px 17px 0px 17px;
+    font-size: 14px;
+    font-weight: 600;
+}
 
 
 .fa-smile{
@@ -43,3 +48,21 @@ overflow-y: scroll;
     font-size: 26px;
 }
 
+
+/* .................... */
+.chat::-webkit-scrollbar{
+    width: 12px;
+    
+}
+
+.chat::-webkit-scrollbar-track {
+    background:transparent
+}
+
+.chat::-webkit-scrollbar-thumb {
+    background:#ebebeb;
+}
+
+.chat::-webkit-scrollbar-corner{
+    border-radius: 50%;
+}
