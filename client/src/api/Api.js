@@ -37,6 +37,57 @@ export const setConversation = async (data) => {
     }
 }
 
+// set conversation   
+export const getConversation = async (data) => {
+    try {
+        const response = await fetch(`${url}/api/conversation/get`, {
+            method: 'POST',
+            body: JSON.stringify(
+                data
+            ),
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        })
+        const json = await response.json();
+        return json;
+    } catch (error) {
+        console.log('Error while calling get API ', error);
+    }
+}
+
+// add new message  
+export const newMessage = async (data) => {
+    try {
+        const response = await fetch(`${url}/api/message/add`, {
+            method: 'POST',
+            body: JSON.stringify(
+                data
+            ),
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        })
+        const json = await response.json();
+        return json;
+    } catch (error) {
+        console.log('Error while calling get API ', error);
+    }
+}
+
+// get message
+export const getMessage = async (id) => {
+    try {
+        const response = await fetch(`${url}/api/message/get/${id}`, {
+            method: 'GET'
+        })
+        const json = await response.json();
+        return json;
+    } catch (error) {
+        console.log('Error while calling get message API ', error);
+    }
+}
+
 
 //////////////////////////////////////////
 // export const addUser = async (data) => {

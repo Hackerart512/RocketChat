@@ -175,16 +175,12 @@ router.post('/follow', fetchuser, async (req, res) => {
 
         const friendId = user._id;
         const userContactList = await Contact.find({user: userId})
-
-
-
        
         // console.log(account)
 
         if (account.contacts.includes(friendId)) {
             return res.status(404).json({ success, message: "User already Exits user" })
         }
-
 
         // Add Contact details for each unique person.
         //create new users

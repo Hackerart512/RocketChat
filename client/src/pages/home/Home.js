@@ -10,16 +10,23 @@ import AddFriend from '../../components/add_friend/AddFriend';
 
 import { getContactList } from '../../api/Api'
 import ChatBox from '../../components/chat_box/ChatBox';
+import { useNavigate } from 'react-router-dom';
+import {getConversation} from "../../api/Api"
 
 const Home = () => {
 
-    const { person } = useSocket();
+    let navigate = useNavigate();
+    if(!localStorage.getItem('token'))  navigate('/signup')
+
+    const { person ,account} = useSocket();
 
     const [modalActive, setModalActive] = useState(false);
 
     const [ContactList, setContactList] = useState([]);
 
     const [text, setText] = useState('');
+
+    const [conversation, setConversation] = useState({})
 
 
     const modalActiveFunction = () => {
@@ -31,6 +38,7 @@ const Home = () => {
         const getContactListDetails = async () => {
             let data = await getContactList();
             // filter out by search 
+
             const filterContact = data.contactLists.filter(contact => contact.name.toLowerCase().
                 includes(text.toLowerCase()))
 
@@ -41,6 +49,15 @@ const Home = () => {
     }, [text])
     // call  if whenever change text state....
 
+
+    useEffect(() => {
+        const getConversationDetails = async () => {
+            let data = await getConversation({senderId: account._id,receiverId: person._id})
+            // console.log(data, person._id, account._id);
+            setConversation(data);
+        }
+        getConversationDetails()
+    }, [person._id])
 
 
     return (
@@ -143,7 +160,7 @@ const Home = () => {
                         Object.keys(person).length ? <Header person={person} /> : null
                     }
                     {
-                        Object.keys(person).length ? <ChatBox /> : "hu"
+                        Object.keys(person).length ? <ChatBox person={person}  conversation={conversation} /> : "hu"
                     }
 
                 </div>

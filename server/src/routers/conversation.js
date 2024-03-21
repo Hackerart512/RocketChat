@@ -4,7 +4,7 @@ const bodyParser = require('body-parser');
 const { body, validationResult } = require('express-validator');
 
 const Conversation = require('../model/Conversation');
- 
+
 
 router.use(bodyParser.json())
 
@@ -37,7 +37,7 @@ router.post('/add', [
 
     try {
         const savedConversation = await newConversation.save();
-    
+
         return res.status(200).json('conversation save succefully');
     } catch (error) {
         res.status(500).json(error.message);
@@ -46,9 +46,10 @@ router.post('/add', [
 })
 
 // Route:2 Get
-router.get('/get',  async (req, res) => {
+router.post('/get', async (req, res) => {
     try {
         const conversation = await Conversation.findOne({ members: { $all: [req.body.senderId, req.body.receiverId] } });
+
         res.status(200).json(conversation);
     } catch (error) {
         res.status(500).json(error);

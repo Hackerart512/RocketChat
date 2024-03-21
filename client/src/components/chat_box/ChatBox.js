@@ -1,7 +1,36 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import WrittenChatCard from '../written_chat_card/WrittenChatCard'
+import { useSocket } from "../../context/SocketProvider";
+import { newMessage, getMessage } from "../../api/Api"
 
-const ChatBox = () => {
+
+const ChatBox = ({ person, conversation }) => {
+
+    const [message, setMessag] = useState('');
+    const { account } = useSocket();
+
+    const sendText = async () => {
+        let MessagesObject = {
+            senderId: account._id,
+            receiverId: person._id,
+            conversationId: conversation._id,
+            type: 'text',
+            text: message
+        }
+
+        await newMessage(MessagesObject);
+        setMessag("")
+    }
+
+    useEffect(() => {
+        const getMessageDetails = async () => {
+            let data = await getMessage(conversation._id);
+            console.log(data);
+        }
+        
+        conversation._id && getMessageDetails();
+    }, [person._id, conversation._id]);
+
     return (
         <>
             <div className="chatting-container p-4 h-[76vh] ">
@@ -26,11 +55,11 @@ const ChatBox = () => {
 
                             <i className='fa-solid fa-smile'></i>
                             <i className='text-[20px] fa-solid fa-paperclip'></i>
-                            <input className='mx-4' placeholder='Enter message...' type="text" />
+                            <input value={message} onChange={(e) => setMessag(e.target.value)} className='mx-4' placeholder='Enter message...' type="text" />
                         </div>
 
                         <div className='right-side-sendbox'>
-                            <button className=' send-button rounded-full bg-[#ee00ab] text-white   m-1'>
+                            <button onClick={sendText} type='button' className=' send-button rounded-full bg-[#ee00ab] text-white   m-1'>
                                 {`>`}
                             </button>
                         </div>

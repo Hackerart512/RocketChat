@@ -1,8 +1,56 @@
 import React from 'react'
+import { useNavigate } from 'react-router-dom';
+// import context provide to provide a value to any child components
+import { useState } from 'react';
 
 const AddFriend = ({ onClick }) => {
 
-    
+    // react hook
+    const [formData, setFormData] = useState({});
+    // react hook
+ 
+    let navigate = useNavigate();
+
+
+    const handleSubmit = async (event) => {
+        event.preventDefault();
+        console.log(formData);
+
+        try {
+            const response = await fetch('http://localhost:5000/api/auth/follow', {
+                method: 'POST',
+                body: JSON.stringify(
+                    formData
+                ),
+                headers: {
+                    'Content-Type': 'application/json',
+                    'auth-token': `${localStorage.getItem('token')}`,
+                }
+            })
+            const json = await response.json();
+            window.alert(json.message)
+
+            if(json.success) {
+                navigate('/')
+            }
+            navigate('/')
+            return json;
+        } catch (error) {
+            console.log('Error while calling addUser API ', error);
+        }
+
+        
+    }
+
+
+    const handleChange = (event) => {
+        console.log(event.target.value, event.target.name);
+        const { name, value } = event.target;
+        setFormData({
+            ...formData,
+            [name]: value
+        });
+    }
 
     return (
         <>
@@ -16,35 +64,35 @@ const AddFriend = ({ onClick }) => {
                                 <h5 className="modal-title fs-6" id="exampleModalLabel">Add Friends</h5>
                             </li>
 
-                            <img onClick={onClick} class="w-[20px] cursor-pointer" src="./images/close-window-icon.png"/>
+                            <img onClick={onClick} className="w-[20px] cursor-pointer" src="./images/close-window-icon.png" />
                         </div>
                         <div className="modal-body">
-                            <form>
+                            <form onSubmit={handleSubmit} method='post' action='http://localhost:5000/api/auth/follow'  >
                                 <div className="mb-3 flex items-start flex-col">
-                                    <label for="exampleInputEmail1" className="form-label">Name</label>
-                                    <input type="text" className="form-control" id="" />
+                                    <label htmlFor="exampleInputName" className="form-label">Name</label>
+                                    <input onChange={handleChange} type="text" className="form-control" name="name" />
                                 </div>
                                 <div className="mb-3 flex items-start flex-col">
-                                    <label for="exampleInputnickname" className="form-label">Nickname</label>
-                                    <input type="text" className="form-control" id="" />
+                                    <label htmlFor="exampleInputnickname" className="form-label">Nickname</label>
+                                    <input onChange={handleChange} type="text" className="form-control" name="nickname" />
                                 </div>
-                              
+
                                 <div className="mb-3 flex items-start flex-col">
-                                    <label for="exampleFormPhoneNumber" className="form-label">Phone Number</label>
-                                    <input type="text" className="form-control" id="exampleFormPhoneNumber" />
+                                    <label htmlFor="exampleFormPhoneNumber" className="form-label">Phone Number</label>
+                                    <input onChange={handleChange} type="text" className="form-control" name="phoneNumber" />
                                 </div>
 
                                 <div className="mb-3 flex items-start flex-col ">
-                                    <label for="exampleFormEmail" className="form-label">Email</label>
-                                    <input type="text" className="form-control" id="exampleFormEmail" />
+                                    <label htmlFor="exampleFormEmail" className="form-label">Email</label>
+                                    <input onChange={handleChange} type="text" className="form-control" name="email" />
                                 </div>
 
-                                
+
+                                <div className="modal-footer">
+                                    <button onClick={onClick} type="button" className="btn text-black   ">Cancel</button>
+                                    <button type="submit" className="btn text-white bg-[var(--themeColor)]  hover:bg-[var(--themeColor)]">Add Participant</button>
+                                </div>
                             </form>
-                        </div>
-                        <div className="modal-footer">
-                            <button onClick={onClick} type="button" className="btn text-black bg- hover:bg- ">Cancel</button>
-                            <button type="button" className="btn text-white bg-[var(--themeColor)]  hover:bg-[var(--themeColor)]">Add Participant</button>
                         </div>
                     </div>
                 </div>
