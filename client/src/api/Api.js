@@ -1,6 +1,26 @@
 const url = 'http://localhost:5000';
 
 
+
+// Signup user 
+export const signUp = async (data) => {
+    try {
+        const response = await fetch(`${url}/api/auth/signup`, {
+            method: 'POST',
+            body: JSON.stringify(
+                data
+            ),
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        })
+        const json = await response.json();
+        return json;
+    } catch (error) {
+        console.log('Error while Signup API.', error);
+    }
+}
+
 // Get our Contact
 export const getContactList = async () => {
     try {
@@ -14,7 +34,7 @@ export const getContactList = async () => {
         const json = await response.json();
         return json;
     } catch (error) {
-        console.log('Error while calling addUser API ', error);
+        console.log('Error while calling get users API ', error);
     }
 }
 
@@ -33,7 +53,7 @@ export const setConversation = async (data) => {
         const json = await response.json();
         return json;
     } catch (error) {
-        console.log('Error while calling addUser API ', error);
+        console.log('Error while calling set conversation API ', error);
     }
 }
 
@@ -87,7 +107,6 @@ export const getMessage = async (id) => {
         console.log('Error while calling get message API ', error);
     }
 }
-
 
 //////////////////////////////////////////
 // export const addUser = async (data) => {

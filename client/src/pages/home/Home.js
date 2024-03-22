@@ -11,14 +11,18 @@ import AddFriend from '../../components/add_friend/AddFriend';
 import { getContactList } from '../../api/Api'
 import ChatBox from '../../components/chat_box/ChatBox';
 import { useNavigate } from 'react-router-dom';
-import {getConversation} from "../../api/Api"
+import { getConversation } from "../../api/Api"
 
 const Home = () => {
 
-    let navigate = useNavigate();
-    if(!localStorage.getItem('token'))  navigate('/signup')
 
-    const { person ,account} = useSocket();
+    let navigate = useNavigate();
+    
+    useEffect(() => {
+        if (!localStorage.getItem('token')) navigate('/signup')
+    }, [localStorage.getItem('token')])
+
+    const { person, account } = useSocket();
 
     const [modalActive, setModalActive] = useState(false);
 
@@ -52,7 +56,7 @@ const Home = () => {
 
     useEffect(() => {
         const getConversationDetails = async () => {
-            let data = await getConversation({senderId: account._id,receiverId: person._id})
+            let data = await getConversation({ senderId: account._id, receiverId: person._id })
             // console.log(data, person._id, account._id);
             setConversation(data);
         }
@@ -149,7 +153,7 @@ const Home = () => {
                             })
                         }
 
-                       
+
                     </div>
 
                 </div>
@@ -160,7 +164,7 @@ const Home = () => {
                         Object.keys(person).length ? <Header person={person} /> : null
                     }
                     {
-                        Object.keys(person).length ? <ChatBox person={person}  conversation={conversation} /> : "hu"
+                        Object.keys(person).length ? <ChatBox person={person} conversation={conversation} /> : "hu"
                     }
 
                 </div>

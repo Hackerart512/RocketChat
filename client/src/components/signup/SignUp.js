@@ -1,10 +1,9 @@
-import React from 'react';
-import "./login.css";
-import { useNavigate, Link } from 'react-router-dom';
+import React from 'react'
 import { useState } from 'react';
+import { useNavigate, Link } from 'react-router-dom';
 
-const Login = () => {
- 
+const SignUp = () => {
+
     // react hook
     const [formData, setFormData] = useState({});
     // react hook
@@ -18,7 +17,7 @@ const Login = () => {
 
         console.log(formData);
 
-        const response = await fetch('http://localhost:5000/api/auth/login', {
+        const response = await fetch('http://localhost:5000/api/auth/signup', {
             method: 'POST',
             body: JSON.stringify(
                 formData
@@ -52,7 +51,6 @@ const Login = () => {
             [name]: value
         });
     }
-
     return (
         <>
             <section className="login-section flex items-center justify-center flex-col">
@@ -63,14 +61,23 @@ const Login = () => {
                 </div>
 
                 <div className="flex items-center justify-center flex-col my-4">
-                    <h2 className='mx-3  text-[25px] font-semibold '>Sign in</h2>
+                    <h2 className='mx-3  text-[25px] font-semibold '>Registration</h2>
 
-                    <p className='text-[20px] text-[#7a7f9a] mt-2'>Sign in to continue to Rocket Chat.</p>
+                    <p className='text-[20px] text-[#7a7f9a] mt-2'>Sign in to continue to Rokect Chat.</p>
 
                 </div>
 
                 <div className="form-container pb-5">
-                    <form onSubmit={handleSubmit} method="post" action="http://localhost:5000/api/auth/login" className="form">
+                    <form onSubmit={handleSubmit} method="post" action="http://localhost:5000/api/auth/signup" className="form">
+                        <div className="input-box ">
+                            <label>Name</label>
+
+                            <div className="d-flex align-items-center justify-content-center ">
+                                <i className="fa-regular fa-user"></i>
+                                <input onChange={handleChange} type="text" placeholder="Name" name="name" />
+                            </div>
+                        </div>
+
                         <div className="input-box ">
                             <label>Username</label>
 
@@ -98,7 +105,7 @@ const Login = () => {
                                 <label className='mx-2'>Remember me</label>
                             </div>
                             <div>
-                                <Link to="#"> Forgot password</Link>
+                                <a href="#"> Forgot password</a>
                             </div>
                         </div>
                         <button className='login-btn' type='submit'>Sign in</button>
@@ -109,9 +116,9 @@ const Login = () => {
 
                 <div className="my-5">
 
-                    <p className='text-[20px]   mt-2'>Don't have an account ? <Link to="/signup">Sign up</Link></p>
+                    <p className='text-[20px]   mt-2'>Already have an account ? <Link to="/login">Login</Link></p>
 
-                    <p className='text-[20px]   mt-4'>© 2024 RokectChat. Crafted with <i className='fa fa-heart text-[red]'></i> by Team Coders War</p>
+                    <p className='text-[20px]   mt-4'>© 2024 Rocket Chat. Crafted with <i className='fa fa-heart text-[red]'></i> by Coders Wars</p>
                 </div>
 
             </section>
@@ -119,4 +126,4 @@ const Login = () => {
     )
 }
 
-export default Login
+export default SignUp
