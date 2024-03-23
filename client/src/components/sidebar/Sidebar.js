@@ -1,15 +1,14 @@
 import React from 'react';
 import "./sidebar.css";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate,Link } from 'react-router-dom';
 import { useState } from 'react';
-import AddIcon from '@material-ui/icons/Add';
 import ChatIcon from '@material-ui/icons/Chat';
 // import  PersonAddAltIcon from '@icons-material-ui/PersonAddAlt';
 import PersonAddAltIcon from '@material-ui/icons/PowerSettingsNew';
 import Settings from '@material-ui/icons/Settings';
 import Public from '@material-ui/icons/Public';
 import PersonAdd from '@material-ui/icons/PersonAdd';
-import { styled } from '@material-ui/core';
+// import { styled } from '@material-ui/core';
 // import SwitchAccount from '@material-ui/icons/SwitchAccount';
 // import PersonAddIcon from '@mui/icons-material/PersonAdd';
 // import PublicIcon from '@mui/icons-material/Public';
@@ -44,14 +43,14 @@ const SIdebar = () => {
 
                     <div className="first-menu">
                         <ul className="">
-                            <li className=" main-li"><ChatIcon className='sidebar-icons' /></li>
+                            <li className=" main-li cursor-pointer"><Link to="/"><ChatIcon className='sidebar-icons' /></Link></li>
 
-                            <li className="text-[#570786]  main-li"><Public /></li>
 
-                            <li className="text-[#570786]  main-li"><i className="fa-solid fa-signal"></i></li>
+                            <li className="text-[#570786]  main-li cursor-pointer"><i className="fa-solid fa-signal"></i></li>
 
-                            <li className="text-[#570786]  main-li"><PersonAdd /></li>
-                            <li className="text-[#570786]  main-li"><Settings /></li>
+                            <li className="text-[#570786]  main-li cursor-pointer"><PersonAdd /></li>
+                            <li className="text-[#570786]  main-li cursor-pointer"><Public /></li>
+                            <li className="text-[#570786]  main-li cursor-pointer"><Link to="/profile"><Settings /></Link></li>
                         </ul>
                     </div>
                 </div>
@@ -69,7 +68,7 @@ const SIdebar = () => {
                                             Profile
                                         </div>
                                         <div>
-                                        <Public  className='w-[17px]'/>
+                                        <Public style={{fontSize:'17px'}}/>
                                         </div>
                                     </li>
                                     <li className='cursor-pointer flex  items-center justify-between my-2'>
@@ -77,7 +76,7 @@ const SIdebar = () => {
                                             Settings
                                         </div>
                                         <div>
-                                            <Settings  className='w-[17px]'/>
+                                            <Settings  style={{fontSize:'17px'}}/>
                                         </div>
                                     </li>
                                     <li onClick={logoutUser} className='flex items-center justify-between my-2 cursor-pointer'>
@@ -85,7 +84,7 @@ const SIdebar = () => {
                                             Logout
                                         </div>
                                         <div>
-                                            <PersonAddAltIcon  className='bottom-icon'/>
+                                            <PersonAddAltIcon style={{fontSize:'17px'}}/>
                                         </div>
                                     </li>
 

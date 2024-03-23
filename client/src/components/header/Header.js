@@ -1,10 +1,14 @@
 import React from 'react';
 import "./header.css";
-
+import { MoreHoriz, Person, Search} from '@material-ui/icons';
+import { useSocket } from "../../context/SocketProvider";
 
 const Header = ({ person }) => {
 
-
+    const {activeUser } = useSocket();
+    console.log(activeUser)
+    // console.log(activeUser.find(user => user.socketId === person._id))
+    // console.log(activeUser.find(user => user._id === person._id))
 
     return (
         <>
@@ -19,20 +23,32 @@ const Header = ({ person }) => {
                             </div>
                     }
 
-                  
+
                     {/* <img src="./images/avatar-13.jpg" alt="" className="w-[45px] rounded-full" /> */}
 
                     <div className="chat-content mx-2">
                         <div className="  text-[15px] text-[--themeColor] font-bold">
                             {person.name}</div>
-                        <p className="text-[12px] text-left">online</p>
+                        <p className="text-[12px] text-left">{activeUser?.find(user => user._id === person._id)?'online':'offline'}</p>
                     </div>
                 </div>
                 <div className='header-right flex items-center justify-center'>
                     <ul className="flex items-center justify-center">
-                        <li className='mx-1 bg-[#f4f4fa] rounded-full  py-[7px] px-[11px]'><i className=' text-[#c8c8d8] fa-solid fa-phone text-[14px]'></i></li>
-                        <li className='mx-1 bg-[#f4f4fa] rounded-full  py-[7px] px-[11px]'><i className=' text-[#c8c8d8] fa-solid fa-phone text-[14px]'></i></li>
-                        <li className='mx-1 bg-[#f4f4fa] rounded-full  py-[7px] px-[11px]'><i className=' text-[#c8c8d8] fa-solid fa-user text-[14px]'></i></li>
+                        <li className='mx-1 bg-[#f4f4fa] rounded-full  p-[10px] flex items-center justify-center'>
+                            <Search className=' text-[#c8c8d8]  text-[14px]' style={{ fontSize: '17px' }} />
+                        </li>
+                        <li className='mx-1 bg-[#f4f4fa] rounded-full  p-[10px] flex items-center justify-center'>
+                            <Person className=' text-[#c8c8d8]  text-[14px]' style={{ fontSize: '17px' }} />
+                        </li>
+
+                        <li className='mx-1 bg-[#f4f4fa] rounded-full  p-[10px] flex items-center justify-center'>
+
+
+                            <MoreHoriz className=' text-[#c8c8d8]  text-[14px]' style={{ fontSize: '17px' }} />
+
+
+                        </li>
+
                     </ul>
                 </div>
             </div>

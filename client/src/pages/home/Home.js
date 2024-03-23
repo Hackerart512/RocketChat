@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import "./home.css";
 import Sidebar from '../../components/sidebar/Sidebar';
 import ChatCard from '../../components/chat_card/ChatCard';
@@ -17,12 +17,14 @@ const Home = () => {
 
 
     let navigate = useNavigate();
-    
+
+
+
     useEffect(() => {
         if (!localStorage.getItem('token')) navigate('/signup')
     }, [localStorage.getItem('token')])
 
-    const { person, account } = useSocket();
+    const { person, account, socket, activeUser, setActiveUser } = useSocket();
 
     const [modalActive, setModalActive] = useState(false);
 
@@ -33,10 +35,17 @@ const Home = () => {
     const [conversation, setConversation] = useState({})
 
 
+    const scrollRef = useRef()
+
+    useEffect(() => {
+        scrollRef.current?.scrollIntoView({ behavior: "smooth" });
+        // scrollRef.scrollTop = scrollRef.scrollHeight;
+        // console.log(scrollRef.current?.scrollIntoView())
+    }, [person])
+
     const modalActiveFunction = () => {
         return setModalActive(!modalActive);
     }
-
 
     useEffect(() => {
         const getContactListDetails = async () => {
@@ -54,6 +63,9 @@ const Home = () => {
     // call  if whenever change text state....
 
 
+   
+
+
     useEffect(() => {
         const getConversationDetails = async () => {
             let data = await getConversation({ senderId: account._id, receiverId: person._id })
@@ -63,6 +75,9 @@ const Home = () => {
         getConversationDetails()
     }, [person._id])
 
+
+
+  
 
     return (
         <>
@@ -158,7 +173,7 @@ const Home = () => {
 
                 </div>
 
-                <div className="chat w-[75vw] h-[82vh] overflow-y-scroll">
+                <div className="chat w-[75vw] h-[82vh] overflow-y-scroll" ref={scrollRef} >
 
                     {
                         Object.keys(person).length ? <Header person={person} /> : null
@@ -168,6 +183,8 @@ const Home = () => {
                     }
 
                 </div>
+
+
             </div>
         </>
     )

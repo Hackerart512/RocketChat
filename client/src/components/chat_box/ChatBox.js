@@ -2,16 +2,31 @@ import React, { useEffect, useState } from 'react'
 import WrittenChatCard from '../written_chat_card/WrittenChatCard'
 import { useSocket } from "../../context/SocketProvider";
 import { newMessage, getMessage } from "../../api/Api"
+import { AttachFile, Send, SentimentSatisfied, SentimentSatisfiedAlt } from '@material-ui/icons';
 
 
 const ChatBox = ({ person, conversation }) => {
 
     const [message, setMessag] = useState('');
+    const [incomingMessage, setIcomingMessage] = useState(null);
 
     const [chatMessages, setChatMessages] = useState([]);
-    const { account } = useSocket();
+    const { account, socket } = useSocket();
+
+    useEffect(() => {
+        socket.current.on('getMessage', data => {
+            setIcomingMessage({
+                ...data,
+                createdAt: Date.now(),
+            })
+        })
+    }, [])
 
     const [toggle, setToggle] = useState(false);
+
+    useEffect(() => {
+        incomingMessage && conversation?.members?.includes(incomingMessage.senderId) && setChatMessages(prev => [...prev, incomingMessage]);
+    }, [incomingMessage, conversation])
 
     const sendText = async () => {
         let MessagesObject = {
@@ -22,7 +37,10 @@ const ChatBox = ({ person, conversation }) => {
             text: message
         }
 
+        socket.current.emit('sendMessage', MessagesObject);
+
         await newMessage(MessagesObject);
+
         setMessag("");
         setToggle(!toggle);
     }
@@ -61,7 +79,7 @@ const ChatBox = ({ person, conversation }) => {
                 {
                     chatMessages && chatMessages.map(msg => {
                         return (
-                            <WrittenChatCard  message={msg} />
+                            <WrittenChatCard message={msg} />
                         )
                     })
                 }
@@ -75,14 +93,16 @@ const ChatBox = ({ person, conversation }) => {
                     <form className="flex items-center justify-between w-[100%]">
                         <div className='left-side-sendbox'>
 
-                            <i className='fa-solid fa-smile'></i>
-                            <i className='text-[20px] fa-solid fa-paperclip'></i>
+
+                            <SentimentSatisfiedAlt className="fa-smile" style={{ fontSize: '25px' }} />
+
+                            <AttachFile style={{ fontSize: '20px' }} />
                             <input value={message} onChange={(e) => setMessag(e.target.value)} className='mx-4 border-none outline-none' placeholder='Enter message...' type="text" />
                         </div>
 
                         <div className='right-side-sendbox'>
-                            <button onClick={sendText} type='button' className=' send-button rounded-full bg-[#ee00ab] text-white   m-1'>
-                                {`>`}
+                            <button onClick={sendText} type='button' className=' send-button rounded-full bg-[#ee00ab] text-white   m-1 p-[9px] flex items-center justify-center'>
+                                <Send />
                             </button>
                         </div>
                     </form>

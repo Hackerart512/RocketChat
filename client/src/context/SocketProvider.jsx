@@ -1,5 +1,5 @@
-import React, { createContext, useMemo, useContext, useState, useEffect } from "react";
-// import { io } from "socket.io-client";
+import React, { createContext, useContext, useState, useEffect, useRef, useMemo } from "react";
+import { io } from "socket.io-client";
 
 
 // import getContactList from "../api/getContactList"
@@ -11,14 +11,32 @@ export const useSocket = () => {
 };
 
 export const SocketProvider = (props) => {
-  //   const socket = useMemo(() => io("localhost:8000"), []);
+
+  const socket = useRef();
+
+  useEffect(() => {
+    socket.current = io('localhost:9000')
+  }, [])
+
+  // const socket = useMemo(() => io("localhost:9000"), []);
 
   const [account, setAccount] = useState([]);
 
   const [person, setPerson] = useState({});
 
-  const [contactList, setContactList] = useState([])
+  const [contactList, setContactList] = useState([]);
+  const [activeUser, setActiveUser] = useState([]);
 
+  useEffect(() => {
+    // if (socket.current) {
+      socket.current.emit('addUser', account);
+      socket.current.on('getUsers', users => {
+        setActiveUser(users)
+        console.log(users)
+      }
+      )
+    // }
+  }, [account])
 
   // user account
   const userId = async () => {
@@ -55,8 +73,8 @@ export const SocketProvider = (props) => {
     getContactList()
   }, []);
 
-  return ( 
-    <SocketContext.Provider value={{ account, contactList, getContactList, person, setPerson }}>
+  return (
+    <SocketContext.Provider value={{ socket, account, contactList, getContactList, person, setPerson, activeUser, setActiveUser }}>
       {props.children}
     </SocketContext.Provider>
   );

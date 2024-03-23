@@ -2,7 +2,17 @@ import React from 'react'
 import SIdebar from '../../components/sidebar/Sidebar';
 import "./profile.css"
 
+import Facebook from '@material-ui/icons/Facebook';
+
+
+import { useSocket } from "../../context/SocketProvider";
+import { Instagram, LinkedIn, Twitter, YouTube } from '@material-ui/icons';
+
 const Profile = () => {
+
+    const {account } = useSocket();
+
+    // console.log(account)
     return (
         <>
             <div className="main-wrapper ">
@@ -45,37 +55,37 @@ const Profile = () => {
                                 </span>
                             </label>
                             <h5 class="mt-3 profile-name mb-1">Rocket chat</h5>
-                            <p class="profile-email mb-1">roket123@gmail.com</p>
+                            <p class="profile-email mb-1">{account.email}</p>
                             <h5 class="profile-country mb-0">IND</h5>
                         </div>
                         <div class="profile-info">
                             <div class="text-center mb-4">
                                 <p class="info-title mb-0">Phone</p>
-                                <span class="info-text">+91 99999-55555</span>
+                                <span class="info-text">+917676767676</span>
                             </div>
                             <div class="text-center mb-4">
                                 <p class="info-title mb-0">Nick Name</p>
-                                <span class="info-text">chat name</span>
+                                <span class="info-text">{account.name}</span>
                             </div>
                             <div class="text-center mb-4">
                                 <p class="info-title mb-0">Email</p>
-                                <span class="info-text">chat123@gmail.com</span>
+                                <span class="info-text">{account.email}</span>
                             </div>
                             <ul class="social-nav p-0 mb-0 text-center">
                                 <li>
-                                    <a href="#"><i class="fa fa-facebook"></i></a>
+                                    <a href="#" className='text-[var(--themeColor)]'><Facebook/></a>
                                 </li>
                                 <li>
-                                    <a href="#"><i class="f fa-instagram"></i></a>
+                                    <a href="#" className='text-[var(--themeColor)]'><Instagram/></a>
                                 </li>
                                 <li>
-                                    <a href="#"><i class="fa fa-linkedin"></i></a>
+                                    <a href="#" className='text-[var(--themeColor)]'><LinkedIn className='text-[var(--themeColor)]'/></a>
                                 </li>
                                 <li>
-                                    <a href="#"><i class="fa fa-twitter"></i></a>
+                                    <a href="#" className='text-[var(--themeColor)]'><Twitter/></a>
                                 </li>
                                 <li>
-                                    <a href="#"><i class="fa fa-youtube"></i></a>
+                                    <a href="#" className='text-[var(--themeColor)]'><YouTube/></a>
                                 </li>
                             </ul>
                         </div>
