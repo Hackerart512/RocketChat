@@ -22,21 +22,26 @@ export const SocketProvider = (props) => {
 
   const [account, setAccount] = useState([]);
 
+  const [profile, setProfile] = useState([])
+
   const [person, setPerson] = useState({});
 
   const [contactList, setContactList] = useState([]);
   const [activeUser, setActiveUser] = useState([]);
+
+  console.log(account);
 
   useEffect(() => {
     // if (socket.current) {
       socket.current.emit('addUser', account);
       socket.current.on('getUsers', users => {
         setActiveUser(users)
-        console.log(users)
+        // console.log(users)
       }
       )
     // }
   }, [account])
+
 
   // user account
   const userId = async () => {
@@ -50,6 +55,7 @@ export const SocketProvider = (props) => {
     const json = await response.json();
 
     await setAccount(json.user);
+    await setProfile(json.user.profile)
   }
   // user account
 
@@ -74,7 +80,7 @@ export const SocketProvider = (props) => {
   }, []);
 
   return (
-    <SocketContext.Provider value={{ socket, account, contactList, getContactList, person, setPerson, activeUser, setActiveUser }}>
+    <SocketContext.Provider value={{ socket, account, contactList, getContactList, person, setPerson, activeUser, setActiveUser, profile, setProfile }}>
       {props.children}
     </SocketContext.Provider>
   );

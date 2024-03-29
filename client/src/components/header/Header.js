@@ -1,12 +1,12 @@
 import React from 'react';
 import "./header.css";
-import { MoreHoriz, Person, Search} from '@material-ui/icons';
+import { MoreHoriz, Person, Search } from '@material-ui/icons';
 import { useSocket } from "../../context/SocketProvider";
 
 const Header = ({ person }) => {
 
-    const {activeUser } = useSocket();
-    console.log(activeUser)
+    const { activeUser } = useSocket();
+    // console.log(activeUser)
     // console.log(activeUser.find(user => user.socketId === person._id))
     // console.log(activeUser.find(user => user._id === person._id))
 
@@ -19,7 +19,7 @@ const Header = ({ person }) => {
                         person.images ?
                             <img src={"./images/" + person.images} alt="" className="w-[45px] rounded-full" /> :
                             <div className="w-[45px] h-[45px] bg-[#e8dbff] rounded-full flex items-center justify-center">
-                                <h3 className="font-bold text-[var(--themeColor)] ">{person.name[0]}</h3>
+                                <h3 className="font-bold text-[var(--themeColor)] ">{person.name[0].toUpperCase()}</h3>
                             </div>
                     }
 
@@ -29,7 +29,7 @@ const Header = ({ person }) => {
                     <div className="chat-content mx-2">
                         <div className="  text-[15px] text-[--themeColor] font-bold">
                             {person.name}</div>
-                        <p className="text-[12px] text-left">{activeUser?.find(user => user._id === person._id)?'online':'offline'}</p>
+                        <p className="text-[12px] text-left">{activeUser?.find(user => user._id === person._id) ? <span className="text-[green] font-semibold">online</span> : <span className=" font-semibold">offline</span>}</p>
                     </div>
                 </div>
                 <div className='header-right flex items-center justify-center'>

@@ -108,6 +108,26 @@ export const getMessage = async (id) => {
     }
 }
 
+// get message
+export const getTranslate = async (data) => {
+    try {
+        const response = await fetch(`${url}/api/translate/get`, {
+            method: 'POST',
+            body: JSON.stringify(
+                data
+            ),
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        })
+        const json = await response.json();
+        console.log(json)
+        return json;
+    } catch (error) {
+        console.log('Error while calling get message API ', error);
+    }
+}
+
 //////////////////////////////////////////
 // export const addUser = async (data) => {
 //     try {

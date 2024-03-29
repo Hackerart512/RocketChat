@@ -1,24 +1,33 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { useSocket } from "../../context/SocketProvider";
-import  {setConversation} from "../../api/Api"
+import { setConversation } from "../../api/Api"
 import "./chat_card.css";
 
 const ChatCard = ({ user }) => {
 
-    const { setPerson, account } = useSocket();
+    const { setPerson, account, activeUser, person } = useSocket();
 
 
-    const getPerson = async() => {
+    const getPerson = async () => {
+
+        if (!account || !person || !user) {
+            console.error('Account or person is null or undefined');
+            return;
+        }
+
         setPerson(user)
-        await setConversation({senderId:account._id, receiverId:user._id})
+        await setConversation({ senderId: account._id, receiverId: user._id })
     }
 
-    
+
+    // console.log(activeUser)
+    // console.log(person)
+
     return (
         <>
 
             {/* #1 */}
-            <div onClick={getPerson} className="chat-card flex items-center   p-3 my-2 justify-between cursor-pointer">
+            <div onClick={getPerson} className="chat-card flex items-center   p-3 py-2 my-1 justify-between cursor-pointer">
                 <div className="chat-card-left flex items-center rounded-md">
                     <div className="chat-profile relative">
 
@@ -26,12 +35,12 @@ const ChatCard = ({ user }) => {
                             user.images ?
                                 <img src={"./images/" + user.images} alt="" className="w-[45px] rounded-full" /> :
                                 <div className="w-[45px] h-[45px] bg-[#e8dbff] rounded-full flex items-center justify-center">
-                                    <h3 className="font-bold text-[var(--themeColor)] ">{user.name[0]}</h3>
+                                    <h3 className="font-bold text-[var(--themeColor)] ">{user.name[0].toUpperCase()}</h3>
                                 </div>
                         }
 
                         {
-                            user.online == true ?
+                            activeUser?.find(users => users._id === user._id) ?
                                 <span className="absolute top-[33px] right-[3px] w-[9px] h-[9px] bg-[#7ae27a] border-[2px] border-white rounded-full"></span> : <span className="absolute top-[33px] right-[3px] w-[9px] h-[9px] bg-[#ffef3e] border-[2px] border-white rounded-full"></span>
                         }
 
@@ -40,7 +49,7 @@ const ChatCard = ({ user }) => {
                     <div className="chat-content mx-2">
                         <div className="text-left  text-[15px] text-[--themeColor] font-bold">
                             {user.name}</div>
-                        <p className="text-[12px]">{user.msg}</p>
+                        <p className="text-[12px]">It seems logical that the</p>
                     </div>
                 </div>
                 <div className="chat-card-right">

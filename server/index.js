@@ -16,6 +16,10 @@ app.use('/api/conversation', require('./src/routers/conversation'))
 
 app.use('/api/message', require('./src/routers/message'))
 
+app.use('/api/translate', require('./src/routers/translate'))
+
+app.use('/api/profile', require('./src/routers/profile'))
+
 app.get("/", (req, res) => {
     res.send("hello");
 })
@@ -39,9 +43,27 @@ const io = new Server(9000, {
 let users = [];
 
 const addUser = (userData, socketId) => {
-    !users.some(user => user._id === userData._id) && users.push({ ...userData, socketId });
-}
+    // console.log(userData, socketId)
+    // !users.some(user => user._id === userData._id) && users.push({ ...userData, socketId });
 
+    if (!userData) {
+        console.error('User data is null');
+        return;
+    }
+
+    if (!userData._id) {
+        console.error('User data does not have an _id property');
+        return;
+    }
+
+    // Check if the user with the same _id already exists in the users array
+    if (!users.some(user => user._id === userData._id)) {
+        // If not, add the user to the users array with the provided socketId
+        users.push({ ...userData, socketId });
+    } else {
+        console.error('User with the same _id already exists');
+    }
+}
 
 const removeUser = (socketId) => {
     users = users.filter(user => user.socketId !== socketId);
@@ -62,10 +84,17 @@ io.on('connection', (socket) => {
     })
 
     //send message
-    socket.on('sendMessage', (data) => {
-        const user = getUser(data.receiverId);
-        io.to(user.socketId).emit('getMessage', data)
-    })
+    socket.on('sendMessage', async (data) => {
+        // console.log(data);
+        const user = await getUser(data.receiverId);
+        // console.log(user);
+    
+        if (user && user.socketId) {
+            io.to(user.socketId).emit('getMessage', data);
+        } else {
+            console.error('User or user socketId is undefined');
+        }
+    });
 
     //disconnect
     socket.on('disconnect', () => {

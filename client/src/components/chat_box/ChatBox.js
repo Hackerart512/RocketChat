@@ -2,16 +2,63 @@ import React, { useEffect, useState } from 'react'
 import WrittenChatCard from '../written_chat_card/WrittenChatCard'
 import { useSocket } from "../../context/SocketProvider";
 import { newMessage, getMessage } from "../../api/Api"
-import { AttachFile, Send, SentimentSatisfied, SentimentSatisfiedAlt } from '@material-ui/icons';
-
+import { AttachFile, Send, SentimentSatisfiedAlt } from '@material-ui/icons';
+import { getTranslate } from '../../api/Api';
 
 const ChatBox = ({ person, conversation }) => {
+
+    // const [translatedMessage, setTranslatedMessage] = useState([]);
+
+    // ................................
+    let Text = "What are you doing";
+  
+
+    // let apiUrl = `https:api.mymemory.translated.net/get?q=${encodeURIComponent(Text)}&langpair=en|fr`;
 
     const [message, setMessag] = useState('');
     const [incomingMessage, setIcomingMessage] = useState(null);
 
     const [chatMessages, setChatMessages] = useState([]);
     const { account, socket } = useSocket();
+
+    // useEffect(() => {
+
+    //     chatMessages.map(element => {
+    //         // console.log(element.text)
+    //         let translatedFrom = "en";
+    //         let translatedTo = "fr";
+
+    //         let apiUrl = `https:api.mymemory.translated.net/get?q=${element.text}&langpair=${translatedFrom}|${translatedTo}`;
+
+    //         const getTransalte = async () => {
+    //             try {
+    //                 const response = await fetch(`${apiUrl}`)
+    //                 const json = await response.json();
+
+
+    //                 // console.log(json.responseData.translatedText)
+    //                 // console.log(JSON.stringify(json.matches[1].translation))
+    //                 const data =await  json.responseData.translatedText
+
+    //                 // console.log(json.responseData.translatedText)
+    //                 element.text = data;
+    //                 // setTranslatedMessage(prev => [...prev, data])
+    //                 // console.log(data)
+    //                 // return json.matches[1].translation;
+
+    //             } catch (error) {
+    //                 console.log('Error while calling get message API ', error);
+    //             }
+    //         }
+
+    //         getTransalte()
+    //     });
+
+    //     // console.log(getTransalte())
+    // }, [person])
+
+    // ...........................
+
 
     useEffect(() => {
         socket.current.on('getMessage', data => {
@@ -64,6 +111,28 @@ const ChatBox = ({ person, conversation }) => {
         }
     }, [person._id, conversation, toggle]);
 
+    // useEffect(() => {
+    //     const getTranslateDetails = async () => {
+    //         const data = await getTranslate({ msg: 'what are you doing', target: 'en' })
+    //         console.log(data)
+    //     }
+    //     getTranslateDetails();
+
+    // }, [person]);
+
+
+    // useEffect(() => {
+        // const getTranslateDetails = async () => {
+        //     const data = await getTranslate({ msg: 'आप क्या कर रहे', target: 'fr' })
+        //     console.log(data)
+        // }
+        // getTranslateDetails();
+
+    //     console.log(chatMessages);
+
+    // }, [person])
+
+
     return (
         <>
             <div className="chatting-container p-4 h-[76vh] ">
@@ -83,6 +152,13 @@ const ChatBox = ({ person, conversation }) => {
                         )
                     })
                 }
+                {/* {
+                    chatMessages && chatMessages.map(msg => {
+                        return (
+                            <WrittenChatCard message={msg} />
+                        )
+                    })
+                } */}
 
             </div>
 

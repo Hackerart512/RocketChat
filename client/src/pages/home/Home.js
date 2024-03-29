@@ -12,19 +12,20 @@ import { getContactList } from '../../api/Api'
 import ChatBox from '../../components/chat_box/ChatBox';
 import { useNavigate } from 'react-router-dom';
 import { getConversation } from "../../api/Api"
+import OnlineStatus from '../../components/online_status/OnlineStatus';
+import { Search, Toll } from '@material-ui/icons';
 
 const Home = () => {
 
-
     let navigate = useNavigate();
-
 
 
     useEffect(() => {
         if (!localStorage.getItem('token')) navigate('/signup')
     }, [localStorage.getItem('token')])
 
-    const { person, account, socket, activeUser, setActiveUser } = useSocket();
+    const { person, account} = useSocket();
+     
 
     const [modalActive, setModalActive] = useState(false);
 
@@ -33,7 +34,6 @@ const Home = () => {
     const [text, setText] = useState('');
 
     const [conversation, setConversation] = useState({})
-
 
     const scrollRef = useRef()
 
@@ -62,22 +62,31 @@ const Home = () => {
     }, [text])
     // call  if whenever change text state....
 
+    // useEffect(() => {
+    //     const getConversationDetails = async () => {
 
-   
+    //         let data = await getConversation({ senderId: account._id, receiverId: person._id })
+    //         // console.log(data, person._id, account._id);
+    //         setConversation(data);
 
+    //     }
+    //     getConversationDetails()
+    // }, [person._id])
 
     useEffect(() => {
         const getConversationDetails = async () => {
-            let data = await getConversation({ senderId: account._id, receiverId: person._id })
-            // console.log(data, person._id, account._id);
+            if (!account || !person || !person._id) {
+                console.error('Account or person is null or undefined');
+                return;
+            }
+
+            let data = await getConversation({ senderId: account._id, receiverId: person._id });
             setConversation(data);
-        }
-        getConversationDetails()
-    }, [person._id])
+        };
 
+        getConversationDetails();
+    }, [person]);
 
-
-  
 
     return (
         <>
@@ -85,7 +94,7 @@ const Home = () => {
 
                 <Sidebar />
 
-                <div id="slider-scroll" className="sidebar-group ml-[83px] p-3  w-[407px] bg-[#fafbff] overflow-y-scroll h-[100vh]">
+                <div id="slider-scroll" className={`sidebar-group ml-[83px] p-3  w-[407px] bg-[#fafbff] overflow-y-scroll h-[100vh]  ${modalActive ? 'z-[1]' : 'z-[-1]'}`}>
                     {/* top header components */}
                     <div className="flex justify-between items-center px-2">
                         <div className="uppercase  text-[12px] text-[--themeColor] font-extrabold">chats </div>
@@ -103,61 +112,28 @@ const Home = () => {
 
                     <div className="inputFormFeilds px-2">
                         <form action="" className="">
-                            <div className="my-2">
-                                <label htmlFor="" className=""></label>
-                                <input onChange={(e) => setText(e.target.value)} type="text" placeholder="Search Contacts" className="w-[100%]  placeholder:text-[12px] p-2  border-[#f3f3f3] border-[1px]  rounded-sm shadow-sm text-black focus:outline-none" />
+                            <div className="my-2 flex items-center justify-center  w-[100%]  placeholder:text-[12px]   border-[#f3f3f3] border-[1px]  rounded-sm shadow-sm text-black focus:outline-none bg-white">
+                                <label htmlFor="" className="flex items-center justify-center m-0 pl-2 "><Search style={{ fontSize: '18px' }} /></label>
+                                <input onChange={(e) => setText(e.target.value)} type="text" placeholder="Search Contacts" className="w-[100%]  placeholder:text-[12px] p-2  rounded-sm   text-black focus:outline-none" />
                             </div>
                         </form>
                     </div>
 
                     {/* Online status */}
 
-                    <div className="online-status flex px-2">
-                        {/* #1 */}
-                        <div className="status-card flex items-center justify-center bg-white p-2 flex-col w-[70px] mx-1">
-                            <img src="./images/avatar-8.jpg" alt="" className="w-[53px] rounded-md" />
-                            <div className="status-name mt-2">
-                                <p className="text-[12px] font-bold text-[#585858]">helen</p>
-                            </div>
-                        </div>
-                        {/* #1 */}
-                        <div className="status-card flex items-center justify-center bg-white p-2 flex-col w-[70px] mx-1">
-                            <img src="./images/avatar-7.jpg" alt="" className="w-[53px] rounded-md" />
-                            <div className="status-name mt-2">
-                                <p className="text-[12px] font-bold text-[#585858]">Prince</p>
-                            </div>
-                        </div>
-                        {/* #1 */}
-                        <div className="status-card flex items-center justify-center bg-white p-2 flex-col w-[70px] mx-1">
-                            <img src="./images/avatar-13.jpg" alt="" className="w-[53px] rounded-md" />
-                            <div className="status-name mt-2">
-                                <p className="text-[12px] font-bold text-[#585858]">Hathan</p>
-                            </div>
-                        </div>
-                        {/* #1 */}
-                        <div className="status-card flex items-center justify-center bg-white p-2 flex-col w-[70px] mx-1">
-                            <img src="./images/avatar-3.jpg" alt="" className="w-[53px] rounded-md" />
-                            <div className="status-name mt-2">
-                                <p className="text-[12px] font-bold text-[#585858]">Maria</p>
-                            </div>
-                        </div>
-                    </div>
+                    <OnlineStatus />
 
                     <div className="flex justify-between items-center my-3 px-2">
                         <div className="uppercase  text-[12px] text-[--themeColor] font-extrabold">RECENT CHATS</div>
                         <div className="">
                             <ul className="flex">
-
-
+                                <Toll className="bg-[#ee00ab] p-2  text-white rounded-full" style={{ fontSize: '31px' }} />
                             </ul>
                         </div>
                     </div>
 
-
-
                     {/* chats container */}
                     <div className="chat-container px-2">
-
 
                         {
                             ContactList.map((item) => {

@@ -1,18 +1,24 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import SIdebar from '../../components/sidebar/Sidebar';
 import "./profile.css"
 
-import Facebook from '@material-ui/icons/Facebook';
+// import  from '@material-ui/icons/Facebook';
 
 
 import { useSocket } from "../../context/SocketProvider";
-import { Instagram, LinkedIn, Twitter, YouTube } from '@material-ui/icons';
+import { Facebook,Instagram, LinkedIn, Twitter, YouTube, Search } from '@material-ui/icons';
+ 
 
 const Profile = () => {
 
-    const {account } = useSocket();
+    const {account, profile } = useSocket();
+    // console.log(profile);
 
-    // console.log(account)
+    // console.log(account.profile)
+    // useEffect(()=>{
+    //    setProfile(account.profile);
+    // }, [])
+
     return (
         <>
             <div className="main-wrapper ">
@@ -22,7 +28,7 @@ const Profile = () => {
                 <div id="slider-scroll" className="sidebar-group ml-[83px] p-3  w-[407px] bg-[#fafbff] overflow-y-scroll h-[100vh]">
                     {/* top header components */}
                     <div className="flex justify-between items-center px-2">
-                        <div className="uppercase  text-[12px] text-[--themeColor] font-extrabold">proifle </div>
+                        <div className="uppercase  text-[12px] text-[--themeColor] font-extrabold">profile </div>
                         <div className="">
 
                         </div>
@@ -30,10 +36,10 @@ const Profile = () => {
                     {/* top header components */}
 
                     <div className="inputFormFeilds px-2">
-                        <form action="" className="">
-                            <div className="my-2">
-                                <label htmlFor="" className=""></label>
-                                <input type="text" placeholder="Search Contacts" className="w-[100%]  placeholder:text-[12px] p-2  border-[#f3f3f3] border-[1px]  rounded-sm shadow-sm text-black focus:outline-none" />
+                    <form action="" className="">
+                            <div  className="my-2 flex items-center justify-center  w-[100%]  placeholder:text-[12px]   border-[#f3f3f3] border-[1px]  rounded-sm shadow-sm text-black focus:outline-none bg-white">
+                                <label htmlFor="" className="flex items-center justify-center m-0 pl-2 "><Search style={{fontSize:'18px'}}/></label>
+                                <input  type="text" placeholder="Search Contacts" className="w-[100%]  placeholder:text-[12px] p-2  rounded-sm   text-black focus:outline-none" />
                             </div>
                         </form>
                     </div>
@@ -61,11 +67,11 @@ const Profile = () => {
                         <div class="profile-info">
                             <div class="text-center mb-4">
                                 <p class="info-title mb-0">Phone</p>
-                                <span class="info-text">+917676767676</span>
+                                <span class="info-text">+91 {profile.phoneNumber}</span>
                             </div>
                             <div class="text-center mb-4">
                                 <p class="info-title mb-0">Nick Name</p>
-                                <span class="info-text">{account.name}</span>
+                                <span class="info-text">{profile.fullName}</span>
                             </div>
                             <div class="text-center mb-4">
                                 <p class="info-title mb-0">Email</p>

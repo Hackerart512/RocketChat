@@ -26,9 +26,12 @@ const userSchema = new Schema({
 
     // Profile 
     profile:{
+        profilePic:String,
         fullName: String,
-        nickname: String,
+        nickName: String,
         phoneNumber: String,
+        location:String,
+        bio:String
     },
 
     date: {

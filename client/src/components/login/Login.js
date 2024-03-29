@@ -16,7 +16,7 @@ const Login = () => {
     const handleSubmit = async (event) => {
         event.preventDefault();
 
-        console.log(formData);
+        // console.log(formData);
 
         const response = await fetch('http://localhost:5000/api/auth/login', {
             method: 'POST',
