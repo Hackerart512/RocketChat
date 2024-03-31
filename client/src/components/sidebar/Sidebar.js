@@ -22,6 +22,7 @@ const SIdebar = () => {
     let navigate = useNavigate();
 
     const [toggleProfileClick, setToggleProfileClick] = useState(false);
+    const [toggleLaguageClick, setToggleLaguageClick] = useState(false);
 
     const logoutUser = async () => {
         await localStorage.removeItem('token');
@@ -30,8 +31,11 @@ const SIdebar = () => {
     }
 
     const toggleProfile = () => {
-        console.log(toggleProfileClick)
         setToggleProfileClick(!toggleProfileClick);
+    }
+
+    const onLanguageToggle = () => {
+        setToggleLaguageClick(!toggleLaguageClick);
     }
 
 
@@ -54,8 +58,45 @@ const SIdebar = () => {
                                 <PersonAdd />
                             </li>
 
-                            <li className="text-[#570786]  main-li cursor-pointer">
+                            <li onClick={onLanguageToggle} className="text-[#570786]  main-li cursor-pointer relative">
                                 <Public />
+
+                                <ul className={`${toggleLaguageClick ? 'block' : 'none'}  cursor-pointer profile-hover-sidebar shadow-sm `}>
+                                    <li className='cursor-pointer flex items-center justify-between my-2'>
+                                        <div>
+                                           English
+                                        </div>
+                                        <div>
+                                            <Public style={{ fontSize: '17px' }} />
+                                        </div>
+                                    </li>
+                                    <li className='cursor-pointer flex  items-center justify-between my-2'>
+                                        <div>
+                                            Hindi
+                                        </div>
+                                        <div>
+                                            <Settings style={{ fontSize: '17px' }} />
+                                        </div>
+                                    </li>
+                                    <li className='cursor-pointer flex  items-center justify-between my-2'>
+                                        <div>
+                                            Russian
+                                        </div>
+                                        <div>
+                                            <Settings style={{ fontSize: '17px' }} />
+                                        </div>
+                                    </li>
+                                    <li className='cursor-pointer flex  items-center justify-between my-2'>
+                                        <div>
+                                            Russian
+                                        </div>
+                                        <div>
+                                            <Settings style={{ fontSize: '17px' }} />
+                                        </div>
+                                    </li>
+                                    
+
+                                </ul>
                             </li>
 
                             <li className="text-[#570786]  main-li cursor-pointer">
@@ -74,7 +115,7 @@ const SIdebar = () => {
                             <li className="relative">
                                 <img onClick={toggleProfile} className='rounded-full cursor-pointer' src="/images/avatar-13.jpg" alt="img..."></img>
 
-                                <ul className={`${toggleProfileClick ? 'block' : 'none'}  cursor-pointer profile-hover-sidebar shadow-sm`}>
+                                <ul  className={`${toggleProfileClick ? 'block' : 'none'}  cursor-pointer profile-hover-sidebar shadow-sm`}>
                                     <li className='cursor-pointer flex items-center justify-between my-2'>
                                         <div>
                                             Profile
@@ -92,11 +133,11 @@ const SIdebar = () => {
                                         </div>
                                     </li>
                                     <li onClick={logoutUser} className='flex items-center justify-between my-2 cursor-pointer'>
-                                        <div>
+                                        <div className='text-[red]'>
                                             Logout
                                         </div>
                                         <div>
-                                            <PersonAddAltIcon style={{ fontSize: '17px' }} />
+                                            <PersonAddAltIcon style={{ fontSize: '17px' ,color:"red"}} />
                                         </div>
                                     </li>
 

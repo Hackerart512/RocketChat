@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useEffect, useRef, useMemo } from "react";
+import React, { createContext, useContext, useState, useEffect, useRef } from "react";
 import { io } from "socket.io-client";
 
 
@@ -29,7 +29,11 @@ export const SocketProvider = (props) => {
   const [contactList, setContactList] = useState([]);
   const [activeUser, setActiveUser] = useState([]);
 
-  console.log(account);
+  const [myLanguage, setMyLanguage] = useState('en');
+
+  const [update,setUpdate] = useState(false);
+
+  // console.log(account);
 
   useEffect(() => {
     // if (socket.current) {
@@ -44,6 +48,7 @@ export const SocketProvider = (props) => {
 
 
   // user account
+  
   const userId = async () => {
     const response = await fetch('http://localhost:5000/api/auth/getuser', {
       method: 'POST',
@@ -57,6 +62,8 @@ export const SocketProvider = (props) => {
     await setAccount(json.user);
     await setProfile(json.user.profile)
   }
+
+  
   // user account
 
 
@@ -77,10 +84,10 @@ export const SocketProvider = (props) => {
   useEffect(() => {
     userId()
     getContactList()
-  }, []);
+  }, [update]);
 
   return (
-    <SocketContext.Provider value={{ socket, account, contactList, getContactList, person, setPerson, activeUser, setActiveUser, profile, setProfile }}>
+    <SocketContext.Provider value={{ socket, account, contactList, getContactList, person, setPerson, activeUser, setActiveUser, profile, setProfile ,myLanguage, setMyLanguage,update,setUpdate}}>
       {props.children}
     </SocketContext.Provider>
   );

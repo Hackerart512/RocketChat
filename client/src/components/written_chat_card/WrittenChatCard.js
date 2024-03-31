@@ -6,6 +6,8 @@ const WrittenChatCard = ({ message }) => {
 
     const { person, account } = useSocket();
 
+    
+
     const formateTimerFunc = (date) => {
         let hours = new Date(date).getHours();
         const minutes = new Date(date).getMinutes();

@@ -138,15 +138,11 @@ const Home = () => {
                         {
                             ContactList.map((item) => {
                                 return (
-                                    // <ChatCard images="avatar-13.jpg" name={item.name} msg="It seems logical that the" online={true} />
                                     <ChatCard user={item} />
                                 )
                             })
                         }
-
-
                     </div>
-
                 </div>
 
                 <div className="chat w-[75vw] h-[82vh] overflow-y-scroll" ref={scrollRef} >
