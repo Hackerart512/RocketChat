@@ -84,3 +84,30 @@
 .none{
     display: none;
 }
+
+
+/* empty chat components css */
+.empty-chat-container {
+    padding: 23px;
+    /* border: 1px solid black; */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100vh;
+    justify-content: center;
+  
+  }
+  
+ 
+  .empty-chat-pragraph {
+    color: #666464;
+    margin-top: 12px;
+    text-align: center;
+  }
+  
+  .empty-chat-heading {
+    margin-top: 12px;
+    font-weight: 400;
+    font-size: 25px;
+    color: #242121
+  }

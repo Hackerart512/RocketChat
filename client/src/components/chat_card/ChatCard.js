@@ -1,11 +1,11 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useSocket } from "../../context/SocketProvider";
 import { setConversation } from "../../api/Api"
 import "./chat_card.css";
 
 const ChatCard = ({ user }) => {
 
-    const { setPerson, account, activeUser, person } = useSocket();
+    const { setPerson, account, activeUser, person, logout } = useSocket();
 
 
     const getPerson = async () => {
@@ -14,14 +14,14 @@ const ChatCard = ({ user }) => {
             console.error('Account or person is null or undefined');
             return;
         }
-
+        
         setPerson(user)
         await setConversation({ senderId: account._id, receiverId: user._id })
     }
 
-
+   
     // console.log(activeUser)
-    // console.log(person)
+    // console.log(user)
 
     return (
         <>
@@ -32,8 +32,8 @@ const ChatCard = ({ user }) => {
                     <div className="chat-profile relative">
 
                         {
-                            user.images ?
-                                <img src={"./images/" + user.images} alt="" className="w-[45px] rounded-full" /> :
+                            user.profile ?
+                                <img src={"./images/" + user.profile.profilePic} alt="" className="w-[45px] rounded-full object-cover h-[45px]" /> :
                                 <div className="w-[45px] h-[45px] bg-[#e8dbff] rounded-full flex items-center justify-center">
                                     <h3 className="font-bold text-[var(--themeColor)] ">{user.name[0].toUpperCase()}</h3>
                                 </div>

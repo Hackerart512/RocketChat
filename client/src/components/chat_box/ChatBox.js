@@ -152,17 +152,11 @@ const ChatBox = ({ person, conversation }) => {
                         )
                     })
                 }
-                {/* {
-                    chatMessages && chatMessages.map(msg => {
-                        return (
-                            <WrittenChatCard message={msg} />
-                        )
-                    })
-                } */}
+        
 
             </div>
 
-            <div className="w-[68vw] chat-send-container p-4 position-fixed bottom-[0px] bg-white">
+            <div className="w-[70%] chat-send-container p-4 position-fixed bottom-[0px] bg-white">
 
                 <div className="chat-send-innerbox shadow-sm border-[1px]  h-[50px] rounded-[88px] flex items-center justify-center">
 

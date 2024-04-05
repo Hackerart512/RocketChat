@@ -1,42 +1,59 @@
-import React, { useState  } from 'react'
+import React, { useEffect, useState } from 'react'
 
-const GenerateTab = ({ activeTab,setUpdate,update }) => {
+const GenerateTab = ({ activeTab, setUpdate, update }) => {
 
     // react hook
-    const [generlFormData, setGeneralFormData] = useState({});
+    // const [generlFormData, setGeneralFormData] = useState({});
+    
+     // react hook
+     const [generlFormData, setGeneralFormData] = useState({
+        fullName: '',
+        phoneNumber: '',
+        nickName: '',
+        location: '',
+        bio: '',
+        profilePic: null,
+    });
     // react hook
 
     const handleGeneralSubmit = async (event) => {
         event.preventDefault();
         // console.log(generlFormData);
 
+        const formData = new FormData();
+        formData.append('fullName', generlFormData.fullName);
+        formData.append('phoneNumber', generlFormData.phoneNumber);
+        formData.append('nickName', generlFormData.nickName);
+        formData.append('location', generlFormData.location);
+        formData.append('bio', generlFormData.bio);
+        formData.append('profilePic', generlFormData.profilePic); // Append the file
+
         const response = await fetch('http://localhost:5000/api/profile/updateprofile', {
             method: 'PUT',
-            body: JSON.stringify(
-                generlFormData
-            ),
+            body: formData,
             headers: {
-                'Content-Type': 'application/json',
-                'auth-token': `${localStorage.getItem('token')}`,
+                'auth-token': localStorage.getItem('token'),
             }
-        })
+        });
+
         const json = await response.json();
 
-       await setGeneralFormData({
+        // Reset form data
+        setGeneralFormData({
             fullName: '',
             phoneNumber: '',
             nickName: '',
-            profilePic: '',
+            profilePic: null,
             location: '',
             bio: ''
-        })
+        });
 
         if (json.success) {
             window.alert("Profile updated Now")
             setUpdate(!update);
             // After update do not reload page and update profile on hitting button
         }
-        else{
+        else {
             window.alert("Some Error Occur, Reload the page and try again")
         }
     }
@@ -44,13 +61,27 @@ const GenerateTab = ({ activeTab,setUpdate,update }) => {
 
     const handleChange = (event) => {
         // console.log(event.target.value, event.target.name);
-
         const { name, value } = event.target;
         setGeneralFormData({
             ...generlFormData,
             [name]: value
         });
     }
+
+
+    const handlefileChange = (e) => {
+        const { name, files } = e.target;
+        console.log(files[0])
+        setGeneralFormData({
+            ...generlFormData,
+            [name]: files[0]
+        });
+    }
+
+
+    useEffect(() => {
+        console.log(generlFormData);
+    }, [generlFormData])
 
     return (
         <>
@@ -61,7 +92,7 @@ const GenerateTab = ({ activeTab,setUpdate,update }) => {
                 </div>
                 <div className="settings-control p-3">
                     <div className="form-col form-body">
-                        <form onSubmit={handleGeneralSubmit} method="put" action="http://localhost:5000/api/profile/updateprofile">
+                        <form onSubmit={handleGeneralSubmit} method="put" action="http://localhost:5000/api/profile/updateprofile" enctype='multipart/form-data'>
                             <div className="row">
                                 <div className="col-md-6 col-xl-4">
                                     <div className="form-group">
@@ -96,7 +127,7 @@ const GenerateTab = ({ activeTab,setUpdate,update }) => {
                                         <label>Choose profile picture</label>
                                         <div
                                             className="custom-input-file form-control form-control-lg group_formcontrol">
-                                            <input onChange={handleChange} type="file" className="" name="profilePic" value={generlFormData.profilePic} />
+                                            <input onChange={handlefileChange} type="file" className="" name="profilePic" />
                                             <span className="browse-btn">Browse File</span>
                                         </div>
                                     </div>

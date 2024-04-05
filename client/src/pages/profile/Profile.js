@@ -15,9 +15,11 @@ import SocialNav from '../../components/social_nav/SocialNav';
 
 const Profile = () => {
 
-    const { account, profile, setUpdate ,update} = useSocket();
+    const { account, profile, setUpdate, update } = useSocket();
 
     const [generalUpdate, setGeneralUpdate] = useState(false);
+
+    // console.log(profile)
 
     const [activeTab, setActiveTab] = useState('tab1');
 
@@ -54,7 +56,20 @@ const Profile = () => {
                     <div className="profile-card mt-3">
                         <div className="profile-cover text-center mb-3">
                             <label className="profile-cover-avatar" for="avatar_upload">
-                                <img className="avatar-img" src="/images/profile.png" alt="Profile Image" />
+
+                                {/* {
+
+                                    !profile.profilePic ? <img className="avatar-img" src="/images/profile.png" alt="Profile Image" /> : <img className="avatar-img" src={"/images/" + profile.profilePic} alt="Profile Image" />
+
+
+                                } */}
+
+                                {!profile ?
+                                    <img className="avatar-img " src="./images/profile.png" alt="Profile Image" />
+                                    :
+                                    <img className="avatar-img  " src={"./images/" + profile.profilePic} alt="Profile Image" />
+                                }
+
                                 <input type="file" id="avatar_upload" />
                                 <span className="avatar-edit">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
@@ -67,30 +82,50 @@ const Profile = () => {
                                 </span>
                             </label>
                             <h5 className="mt-3 profile-name mb-1">Rocket chat</h5>
-                            <p className="profile-email mb-1">{account.email}</p>
+                            {!(account || account?.email)?
+                                 <p className="profile-email mb-1"> </p>
+                                :
+                                <p className="profile-email mb-1">{account?.email}</p>
+                            }
+
                             <h5 className="profile-country mb-0">IND</h5>
                         </div>
                         <div className="profile-info">
                             <div className="text-center mb-4">
                                 <p className="info-title mb-0">Phone</p>
-                                <span className="info-text">+91 {profile.phoneNumber}</span>
+                                {!(profile || profile?.phoneNumber)?
+                                    <span className="info-text">+91 </span>
+                                    :
+                                    <span className="info-text">+91 {profile?.phoneNumber}</span>
+                                }
+
                             </div>
                             <div className="text-center mb-4">
                                 <p className="info-title mb-0">Nick Name</p>
-                                <span className="info-text">{profile.fullName}</span>
+                                {!(profile || profile?.fullName )?
+                                    <span className="info-text"> </span>
+                                    :
+                                    <span className="info-text">{profile?.fullName}</span>
+                                }
+
                             </div>
                             <div className="text-center mb-4">
                                 <p className="info-title mb-0">Email</p>
-                                <span className="info-text">{account.email}</span>
+                                {!(account || account?.email )?
+                                    <span className="info-text"> </span>
+                                    :
+                                    <span className="info-text">{account?.email}</span>
+                                }
+
                             </div>
 
-                           <SocialNav/>
+                            <SocialNav />
                         </div>
                     </div>
 
                     <div className="settings-card mt-3">
-                        <SettingControl/>
-                        <SettingFooter/>
+                        <SettingControl />
+                        <SettingFooter />
                     </div>
                 </div>
 
@@ -125,15 +160,15 @@ const Profile = () => {
                                     </nav>
 
                                     <div className="tab-content settings-form">
-                                        <GenerateTab activeTab={activeTab} setUpdate={setUpdate} update={update}/>
+                                        <GenerateTab activeTab={activeTab} setUpdate={setUpdate} update={update} />
                                         <NotificationTab activeTab={activeTab} />
                                         <History_tab activeTab={activeTab} />
-                                        <SecurityTab  activeTab={activeTab}/>
+                                        <SecurityTab activeTab={activeTab} />
                                     </div>
                                 </div>
 
                             </div>
-                            
+
                         </div>
                     </div>
 

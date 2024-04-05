@@ -14,6 +14,7 @@ import { useNavigate } from 'react-router-dom';
 import { getConversation } from "../../api/Api"
 import OnlineStatus from '../../components/online_status/OnlineStatus';
 import { Search, Toll } from '@material-ui/icons';
+import EmptyChat from '../../components/empty_chat/EmptyChat';
 
 const Home = () => {
 
@@ -24,8 +25,8 @@ const Home = () => {
         if (!localStorage.getItem('token')) navigate('/signup')
     }, [localStorage.getItem('token')])
 
-    const { person, account} = useSocket();
-     
+    const { person, account } = useSocket();
+
 
     const [modalActive, setModalActive] = useState(false);
 
@@ -52,8 +53,11 @@ const Home = () => {
             let data = await getContactList();
             // filter out by search 
 
-            const filterContact = data.contactLists.filter(contact => contact.name.toLowerCase().
-                includes(text.toLowerCase()))
+            let filterContact;
+            if (data.contactLists) {
+                  filterContact = data.contactLists.filter(contact => contact.name.toLowerCase().
+                    includes(text.toLowerCase()))
+            }
 
             setContactList(filterContact);
             // console.log(data.contactLists);
@@ -145,13 +149,13 @@ const Home = () => {
                     </div>
                 </div>
 
-                <div className="chat w-[75vw] h-[82vh] overflow-y-scroll" ref={scrollRef} >
+                <div className="chat w-[75vw]  overflow-y-scroll" ref={scrollRef} >
 
                     {
                         Object.keys(person).length ? <Header person={person} /> : null
                     }
                     {
-                        Object.keys(person).length ? <ChatBox person={person} conversation={conversation} /> : "hu"
+                        Object.keys(person).length ? <ChatBox person={person} conversation={conversation} /> : <EmptyChat />
                     }
 
                 </div>

@@ -6,7 +6,7 @@ const WrittenChatCard = ({ message }) => {
 
     const { person, account } = useSocket();
 
-    
+     
 
     const formateTimerFunc = (date) => {
         let hours = new Date(date).getHours();
@@ -69,8 +69,8 @@ const WrittenChatCard = ({ message }) => {
                             <div>
                                 {/* <img src="./images/avatar-13.jpg" alt="" className="w-[38px] rounded-full" /> */}
                                 {
-                                    person.images ?
-                                        <img src={"./images/" + person.images} alt="" className="w-[45px] rounded-full" /> :
+                                    person.profile ?
+                                        <img src={"./images/" + person.profile.profilePic} alt="" className="w-[45px] rounded-full object-cover h-[45px]" /> :
                                         <div className="w-[45px] h-[45px] bg-[#e8dbff] rounded-full flex items-center justify-center">
                                             <h3 className="font-bold text-[var(--themeColor)] ">{person.name[0]}</h3>
                                         </div>
@@ -98,8 +98,8 @@ const WrittenChatCard = ({ message }) => {
                         <div className="profile-picture flex justify-between flex-col-reverse  ">
                             <div>
                                 {
-                                    account.images ?
-                                        <img src={"./images/" + account.images} alt="" className="w-[45px] rounded-full" /> :
+                                    account.profile ?
+                                        <img src={"./images/" + account.profile.profilePic} alt="" className="w-[45px] rounded-full object-cover h-[45px]" /> :
                                         <div className="w-[45px] h-[45px] bg-[#e8dbff] rounded-full flex items-center justify-center">
                                             <h3 className="font-bold text-[var(--themeColor)] ">{account.name[0]}</h3>
                                         </div>

@@ -1,14 +1,14 @@
 import React from 'react';
 import "./sidebar.css";
 import { useNavigate, Link } from 'react-router-dom';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import ChatIcon from '@material-ui/icons/Chat';
-import { EditOutlined, LibraryBooks } from '@material-ui/icons';
-// import  PersonAddAltIcon from '@icons-material-ui/PersonAddAlt';
+import { LibraryBooks } from '@material-ui/icons';
 import PersonAddAltIcon from '@material-ui/icons/PowerSettingsNew';
 import Settings from '@material-ui/icons/Settings';
 import Public from '@material-ui/icons/Public';
 import PersonAdd from '@material-ui/icons/PersonAdd';
+import { useSocket } from "../../context/SocketProvider";
 // import { styled } from '@material-ui/core';
 // import SwitchAccount from '@material-ui/icons/SwitchAccount';
 // import PersonAddIcon from '@mui/icons-material/PersonAdd';
@@ -19,6 +19,8 @@ import PersonAdd from '@material-ui/icons/PersonAdd';
 
 const SIdebar = () => {
 
+    const { logout, setLogout} = useSocket();
+
     let navigate = useNavigate();
 
     const [toggleProfileClick, setToggleProfileClick] = useState(false);
@@ -26,7 +28,7 @@ const SIdebar = () => {
 
     const logoutUser = async () => {
         await localStorage.removeItem('token');
-        // if (localStorage.getItem('token'))
+        setLogout(!logout)
         navigate("/login")
     }
 
@@ -38,6 +40,15 @@ const SIdebar = () => {
         setToggleLaguageClick(!toggleLaguageClick);
     }
 
+    const [selectInput, setSelectInput] = useState('');
+
+    const handleInputChange = (e) => {
+        setSelectInput(e.target.value)
+    }
+
+    useEffect(() => {
+        console.log(selectInput);
+    }, [selectInput])
 
 
     return (
@@ -61,10 +72,10 @@ const SIdebar = () => {
                             <li onClick={onLanguageToggle} className="text-[#570786]  main-li cursor-pointer relative">
                                 <Public />
 
-                                <ul className={`${toggleLaguageClick ? 'block' : 'none'}  cursor-pointer profile-hover-sidebar shadow-sm `}>
-                                    <li className='cursor-pointer flex items-center justify-between my-2'>
+                                <div className={`${toggleLaguageClick ? 'block' : 'none'}  cursor-pointer profile-hover-sidebar shadow-sm `}>
+                                    {/* <li className='cursor-pointer flex items-center justify-between my-2'>
                                         <div>
-                                           English
+                                            English
                                         </div>
                                         <div>
                                             <Public style={{ fontSize: '17px' }} />
@@ -88,15 +99,50 @@ const SIdebar = () => {
                                     </li>
                                     <li className='cursor-pointer flex  items-center justify-between my-2'>
                                         <div>
-                                            Russian
+                                            Gujrati
                                         </div>
                                         <div>
                                             <Settings style={{ fontSize: '17px' }} />
                                         </div>
-                                    </li>
-                                    
+                                    </li> */}
 
-                                </ul>
+                                    <select id="selectInput" onChange={handleInputChange} value={selectInput}>
+                                        <option value="gn">
+                                            <div className='cursor-pointer flex items-center justify-between my-2'>
+                                                <div>
+                                                    English
+                                                </div>
+                                                <div>
+                                                    <Public style={{ fontSize: '17px' }} />
+                                                </div>
+                                            </div>
+                                        </option>
+                                        <option value="gn">
+                                            <div className='cursor-pointer flex items-center justify-between my-2'>
+                                                <div>
+                                                    English
+                                                </div>
+                                                <div>
+                                                    <Public style={{ fontSize: '17px' }} />
+                                                </div>
+                                            </div>
+                                        </option>
+                                        <option value="gn">
+                                            <div className='cursor-pointer flex items-center justify-between my-2'>
+                                                <div>
+                                                    English
+                                                </div>
+                                                <div>
+                                                    <Public style={{ fontSize: '17px' }} />
+                                                </div>
+                                            </div>
+                                        </option>
+                                        
+                                        
+                                    </select>
+
+
+                                </div>
                             </li>
 
                             <li className="text-[#570786]  main-li cursor-pointer">
@@ -115,7 +161,7 @@ const SIdebar = () => {
                             <li className="relative">
                                 <img onClick={toggleProfile} className='rounded-full cursor-pointer' src="/images/avatar-13.jpg" alt="img..."></img>
 
-                                <ul  className={`${toggleProfileClick ? 'block' : 'none'}  cursor-pointer profile-hover-sidebar shadow-sm`}>
+                                <ul className={`${toggleProfileClick ? 'block' : 'none'}  cursor-pointer profile-hover-sidebar shadow-sm`}>
                                     <li className='cursor-pointer flex items-center justify-between my-2'>
                                         <div>
                                             Profile
@@ -137,7 +183,7 @@ const SIdebar = () => {
                                             Logout
                                         </div>
                                         <div>
-                                            <PersonAddAltIcon style={{ fontSize: '17px' ,color:"red"}} />
+                                            <PersonAddAltIcon style={{ fontSize: '17px', color: "red" }} />
                                         </div>
                                     </li>
 

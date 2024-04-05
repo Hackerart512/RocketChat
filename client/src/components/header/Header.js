@@ -16,8 +16,8 @@ const Header = ({ person }) => {
                 <div className='header-left flex items-center justify-center'>
 
                     {
-                        person.images ?
-                            <img src={"./images/" + person.images} alt="" className="w-[45px] rounded-full" /> :
+                         person.profile ?
+                            <img src={"./images/" + person.profile.profilePic} alt="" className="w-[45px] h-[45px] rounded-full object-cover" /> :
                             <div className="w-[45px] h-[45px] bg-[#e8dbff] rounded-full flex items-center justify-center">
                                 <h3 className="font-bold text-[var(--themeColor)] ">{person.name[0].toUpperCase()}</h3>
                             </div>

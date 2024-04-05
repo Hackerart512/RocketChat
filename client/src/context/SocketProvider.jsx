@@ -22,6 +22,9 @@ export const SocketProvider = (props) => {
 
   const [account, setAccount] = useState([]);
 
+
+  const [logout, setLogout] = useState(false);
+
   const [profile, setProfile] = useState([])
 
   const [person, setPerson] = useState({});
@@ -31,24 +34,24 @@ export const SocketProvider = (props) => {
 
   const [myLanguage, setMyLanguage] = useState('en');
 
-  const [update,setUpdate] = useState(false);
+  const [update, setUpdate] = useState(false);
 
   // console.log(account);
 
   useEffect(() => {
     // if (socket.current) {
-      socket.current.emit('addUser', account);
-      socket.current.on('getUsers', users => {
-        setActiveUser(users)
-        // console.log(users)
-      }
-      )
+    socket.current.emit('addUser', account);
+    socket.current.on('getUsers', users => {
+      setActiveUser(users)
+      // console.log(users)
+    }
+    )
     // }
   }, [account])
 
 
   // user account
-  
+
   const userId = async () => {
     const response = await fetch('http://localhost:5000/api/auth/getuser', {
       method: 'POST',
@@ -60,10 +63,13 @@ export const SocketProvider = (props) => {
     const json = await response.json();
 
     await setAccount(json.user);
-    await setProfile(json.user.profile)
+
+    if (json.user) {
+      await setProfile(json.user.profile)
+    }
   }
 
-  
+
   // user account
 
 
@@ -84,10 +90,10 @@ export const SocketProvider = (props) => {
   useEffect(() => {
     userId()
     getContactList()
-  }, [update]);
+  }, [update, account, logout]);
 
   return (
-    <SocketContext.Provider value={{ socket, account, contactList, getContactList, person, setPerson, activeUser, setActiveUser, profile, setProfile ,myLanguage, setMyLanguage,update,setUpdate}}>
+    <SocketContext.Provider value={{ socket, account, contactList, getContactList, person, setPerson, activeUser, setActiveUser, profile, setProfile, myLanguage, setMyLanguage, update, setUpdate, logout, setLogout }}>
       {props.children}
     </SocketContext.Provider>
   );

@@ -2,13 +2,15 @@ import React from 'react';
 import "./login.css";
 import { useNavigate, Link } from 'react-router-dom';
 import { useState } from 'react';
+import { useSocket } from "../../context/SocketProvider";
 
 const Login = () => {
  
+    const { setPerson, logout, setLogout } = useSocket();
+
     // react hook
     const [formData, setFormData] = useState({});
     // react hook
-
 
     // react js renderHook
     let navigate = useNavigate();
@@ -32,6 +34,8 @@ const Login = () => {
         if (json.success) {
             //redirect
             localStorage.setItem('token', json.authtoken);
+            setLogout(!logout);
+            setPerson({})
             // set login boolean
             navigate('/')
         }

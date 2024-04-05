@@ -4,29 +4,48 @@ const bodyParser = require('body-parser');
 const { body, validationResult } = require('express-validator');
 const User = require('../model/User');
 const fetchuser = require('../middleware/fetchuser');
-
 router.use(bodyParser.json())
+// const upload = require('../middleware/upload');
+
+const multer = require('multer');
+
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        // path of public folder in client side
+        cb(null, '../client/public/images');
+    },
+    filename: function (req, file, cb) {
+        cb(null, file.originalname);
+        // console.log(file)
+    }
+});
+
+const upload = multer({ storage: storage });
+
+
 
 //Route :1 update profile POST:"/api/profile/updateprofile"
-router.put('/updateprofile', fetchuser, async function (req, res) {
+router.put('/updateprofile', fetchuser, upload.single('profilePic'), async function (req, res) {
 
     let success = false;
 
-    const errors = validationResult(req);
-
-    if (!errors.isEmpty()) {
-        return res.status(400).json({success, errors: errors.array() });
-    }
+    console.log(req.body);
+    console.log(req.file)
 
     const { profilePic, fullName, nickName, phoneNumber, location, bio } = req.body;
+
     console.log(profilePic)
+
     try {
 
         let userId = req.user.id;
 
         let user = await User.findById(userId);
 
-        if (profilePic) user.profile.profilePic = profilePic;
+        if (req.file) {
+            if (req.file.filename) user.profile.profilePic = req.file.filename;
+        }
+
         if (fullName) user.profile.fullName = fullName;
         if (nickName) user.profile.nickName = nickName;
         if (phoneNumber) user.profile.phoneNumber = phoneNumber;
@@ -36,10 +55,10 @@ router.put('/updateprofile', fetchuser, async function (req, res) {
         await user.save();
 
         success = true;
-        res.status(200).json({success});
+        res.status(200).json({ success });
     } catch (err) {
         console.log("Error : " + err.message);
-        res.status(500).json({success, message: "An internal error" });
+        res.status(500).json({ success, message: "An internal error" });
     }
 })
 
