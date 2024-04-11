@@ -32,7 +32,7 @@ router.put('/updateprofile', fetchuser, upload.single('profilePic'), async funct
     console.log(req.body);
     console.log(req.file)
 
-    const { profilePic, fullName, nickName, phoneNumber, location, bio } = req.body;
+    const { profilePic, fullName, nickName, phoneNumber, location, bio, language } = req.body;
 
     console.log(profilePic)
 
@@ -51,6 +51,7 @@ router.put('/updateprofile', fetchuser, upload.single('profilePic'), async funct
         if (phoneNumber) user.profile.phoneNumber = phoneNumber;
         if (location) user.profile.location = location;
         if (bio) user.profile.bio = bio;
+        if (language) user.profile.language = language;
 
         await user.save();
 
@@ -72,6 +73,5 @@ router.get('/getprofile', fetchuser, async (req, res) => {
         res.status(500).json({ message: "This is internal Error...." })
     }
 })
-
 
 module.exports = router;

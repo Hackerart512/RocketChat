@@ -19,7 +19,7 @@ import { useSocket } from "../../context/SocketProvider";
 
 const SIdebar = () => {
 
-    const { logout, setLogout} = useSocket();
+    const { logout, setLogout, profile,  setMyLanguage } = useSocket();
 
     let navigate = useNavigate();
 
@@ -42,14 +42,33 @@ const SIdebar = () => {
 
     const [selectInput, setSelectInput] = useState('');
 
+    // On change event for input language fields 
     const handleInputChange = (e) => {
         setSelectInput(e.target.value)
     }
 
-    useEffect(() => {
-        console.log(selectInput);
-    }, [selectInput])
+    const updateLanguageDetails = async () => {
+        const formData = new FormData();
+        formData.append('language',  selectInput);
 
+        const response = await fetch('http://localhost:5000/api/profile/updateprofile', {
+            method: 'PUT',
+            body: formData,
+            headers: {
+                'auth-token': localStorage.getItem('token'),
+            }
+        });
+        const json = await response.json();
+        // console.log(json);
+    }
+
+    useEffect(() => {
+        // console.log(selectInput);
+        setMyLanguage(selectInput)
+        // Api for Add language in database  With profile by defalut set English laguage
+        updateLanguageDetails()
+
+    }, [selectInput]) // After change input in selectInput the run that fucntion.. 
 
     return (
         <>
@@ -72,42 +91,11 @@ const SIdebar = () => {
                             <li onClick={onLanguageToggle} className="text-[#570786]  main-li cursor-pointer relative">
                                 <Public />
 
-                                <div className={`${toggleLaguageClick ? 'block' : 'none'}  cursor-pointer profile-hover-sidebar shadow-sm `}>
-                                    {/* <li className='cursor-pointer flex items-center justify-between my-2'>
-                                        <div>
-                                            English
-                                        </div>
-                                        <div>
-                                            <Public style={{ fontSize: '17px' }} />
-                                        </div>
-                                    </li>
-                                    <li className='cursor-pointer flex  items-center justify-between my-2'>
-                                        <div>
-                                            Hindi
-                                        </div>
-                                        <div>
-                                            <Settings style={{ fontSize: '17px' }} />
-                                        </div>
-                                    </li>
-                                    <li className='cursor-pointer flex  items-center justify-between my-2'>
-                                        <div>
-                                            Russian
-                                        </div>
-                                        <div>
-                                            <Settings style={{ fontSize: '17px' }} />
-                                        </div>
-                                    </li>
-                                    <li className='cursor-pointer flex  items-center justify-between my-2'>
-                                        <div>
-                                            Gujrati
-                                        </div>
-                                        <div>
-                                            <Settings style={{ fontSize: '17px' }} />
-                                        </div>
-                                    </li> */}
+                                <div className={`${toggleLaguageClick ? 'block' : 'none'}  cursor-pointer profile-hover-sidebar shadow-sm left-[52px] top-[0px] absolute bg-white`}>
+
 
                                     <select id="selectInput" onChange={handleInputChange} value={selectInput}>
-                                        <option value="gn">
+                                        <option value="en">
                                             <div className='cursor-pointer flex items-center justify-between my-2'>
                                                 <div>
                                                     English
@@ -117,7 +105,87 @@ const SIdebar = () => {
                                                 </div>
                                             </div>
                                         </option>
-                                        <option value="gn">
+                                        <option value="gu">
+                                            <div className='cursor-pointer flex items-center justify-between my-2'>
+                                                <div>
+                                                    Gujrati
+                                                </div>
+                                                <div>
+                                                    <Public style={{ fontSize: '17px' }} />
+                                                </div>
+                                            </div>
+                                        </option>
+                                        <option value="fr">
+                                            <div className='cursor-pointer flex items-center justify-between my-2'>
+                                                <div>
+                                                    Franch
+                                                </div>
+                                                <div>
+                                                    <Public style={{ fontSize: '17px' }} />
+                                                </div>
+                                            </div>
+                                        </option>
+                                        <option value="ru">
+                                            <div className='cursor-pointer flex items-center justify-between my-2'>
+                                                <div>
+                                                    Russian
+                                                </div>
+                                                <div>
+                                                    <Public style={{ fontSize: '17px' }} />
+                                                </div>
+                                            </div>
+                                        </option>
+                                        <option value="hi">
+                                            <div className='cursor-pointer flex items-center justify-between my-2'>
+                                                <div>
+                                                    Hindi
+                                                </div>
+                                                <div>
+                                                    <Public style={{ fontSize: '17px' }} />
+                                                </div>
+                                            </div>
+                                        </option>
+                                        <option value="ja">
+                                            <div className='cursor-pointer flex items-center justify-between my-2'>
+                                                <div>
+                                                    Japanese
+                                                </div>
+                                                <div>
+                                                    <Public style={{ fontSize: '17px' }} />
+                                                </div>
+                                            </div>
+                                        </option>
+                                        <option value="mr">
+                                            <div className='cursor-pointer flex items-center justify-between my-2'>
+                                                <div>
+                                                    Marathi
+                                                </div>
+                                                <div>
+                                                    <Public style={{ fontSize: '17px' }} />
+                                                </div>
+                                            </div>
+                                        </option>
+                                        <option value="ta">
+                                            <div className='cursor-pointer flex items-center justify-between my-2'>
+                                                <div>
+                                                    Tamil
+                                                </div>
+                                                <div>
+                                                    <Public style={{ fontSize: '17px' }} />
+                                                </div>
+                                            </div>
+                                        </option>
+                                        <option value="ur">
+                                            <div className='cursor-pointer flex items-center justify-between my-2'>
+                                                <div>
+                                                    Urdu
+                                                </div>
+                                                <div>
+                                                    <Public style={{ fontSize: '17px' }} />
+                                                </div>
+                                            </div>
+                                        </option>
+                                        <option value="en">
                                             <div className='cursor-pointer flex items-center justify-between my-2'>
                                                 <div>
                                                     English
@@ -127,18 +195,8 @@ const SIdebar = () => {
                                                 </div>
                                             </div>
                                         </option>
-                                        <option value="gn">
-                                            <div className='cursor-pointer flex items-center justify-between my-2'>
-                                                <div>
-                                                    English
-                                                </div>
-                                                <div>
-                                                    <Public style={{ fontSize: '17px' }} />
-                                                </div>
-                                            </div>
-                                        </option>
-                                        
-                                        
+
+
                                     </select>
 
 
@@ -159,17 +217,26 @@ const SIdebar = () => {
                         <ul>
 
                             <li className="relative">
-                                <img onClick={toggleProfile} className='rounded-full cursor-pointer' src="/images/avatar-13.jpg" alt="img..."></img>
+
+                                {!profile ?
+                                    <img onClick={toggleProfile} className='rounded-full cursor-pointer' src="/images/avatar-13.jpg" alt="img..."></img>
+                                    :
+                                    <img onClick={toggleProfile} className='rounded-full cursor-pointer h-[45px] object-cover w-[45px]' src={"./images/" + profile.profilePic} alt="img..."></img>
+                                }
+
+                                {/* <img onClick={toggleProfile} className='rounded-full cursor-pointer' src="/images/avatar-13.jpg" alt="img..."></img> */}
 
                                 <ul className={`${toggleProfileClick ? 'block' : 'none'}  cursor-pointer profile-hover-sidebar shadow-sm`}>
-                                    <li className='cursor-pointer flex items-center justify-between my-2'>
-                                        <div>
-                                            Profile
-                                        </div>
-                                        <div>
-                                            <Public style={{ fontSize: '17px' }} />
-                                        </div>
-                                    </li>
+                                    <Link className='cursor-pointer flex items-center justify-between ' to="profile">
+                                        <li className='cursor-pointer flex items-center justify-between my-2'>
+                                            <div>
+                                                Profile
+                                            </div>
+                                            <div>
+                                                <Public className='' style={{ fontSize: '17px' }} />
+                                            </div>
+                                        </li>
+                                    </Link>
                                     <li className='cursor-pointer flex  items-center justify-between my-2'>
                                         <div>
                                             Settings

@@ -11,7 +11,7 @@ const ChatBox = ({ person, conversation }) => {
 
     // ................................
     let Text = "What are you doing";
-  
+
 
     // let apiUrl = `https:api.mymemory.translated.net/get?q=${encodeURIComponent(Text)}&langpair=en|fr`;
 
@@ -19,7 +19,7 @@ const ChatBox = ({ person, conversation }) => {
     const [incomingMessage, setIcomingMessage] = useState(null);
 
     const [chatMessages, setChatMessages] = useState([]);
-    const { account, socket } = useSocket();
+    const { account, socket, profile } = useSocket();
 
     // useEffect(() => {
 
@@ -81,7 +81,8 @@ const ChatBox = ({ person, conversation }) => {
             receiverId: person._id,
             conversationId: conversation._id,
             type: 'text',
-            text: message
+            text: message,
+            language: profile?.language
         }
 
         socket.current.emit('sendMessage', MessagesObject);
@@ -122,11 +123,11 @@ const ChatBox = ({ person, conversation }) => {
 
 
     // useEffect(() => {
-        // const getTranslateDetails = async () => {
-        //     const data = await getTranslate({ msg: 'आप क्या कर रहे', target: 'fr' })
-        //     console.log(data)
-        // }
-        // getTranslateDetails();
+    // const getTranslateDetails = async () => {
+    //     const data = await getTranslate({ msg: 'आप क्या कर रहे', target: 'fr' })
+    //     console.log(data)
+    // }
+    // getTranslateDetails();
 
     //     console.log(chatMessages);
 
@@ -152,7 +153,7 @@ const ChatBox = ({ person, conversation }) => {
                         )
                     })
                 }
-        
+
 
             </div>
 

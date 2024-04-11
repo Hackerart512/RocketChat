@@ -31,7 +31,8 @@ const userSchema = new Schema({
         nickName: String,
         phoneNumber: String,
         location:String,
-        bio:String
+        bio:String,
+        language:String
     },
 
     date: {

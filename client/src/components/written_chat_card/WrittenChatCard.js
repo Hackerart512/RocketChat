@@ -4,9 +4,15 @@ import { AccessTime, MoreVert } from '@material-ui/icons';
 
 const WrittenChatCard = ({ message }) => {
 
-    const { person, account } = useSocket();
+    const { person, account, myLanguage, profile } = useSocket();
 
-     
+    const [personLaguage, setPersonLaguage] = useState('en');
+
+
+    useEffect(() => {
+
+    }, [])
+
 
     const formateTimerFunc = (date) => {
         let hours = new Date(date).getHours();
@@ -25,27 +31,51 @@ const WrittenChatCard = ({ message }) => {
 
     useEffect(() => {
         // console.log(element.text)
-        let translatedFrom = "en";
-        let translatedTo = "hi";
 
-        let apiUrl = `https:api.mymemory.translated.net/get?q=${message.text}&langpair=${translatedFrom}|${translatedTo}`;
+        // from database
+        let translatedFrom
+        // if (!(account || account?.language))
+        // translatedFrom = personLaguage;
+        if (!person.profile.language)
+            translatedFrom = "en"   //mylanguage
+        else
+            translatedFrom = person?.profile?.language;
+
+        // To language
+        let translatedTo;
+        if (!profile.language)
+            translatedTo = "hi"   //mylanguage
+        else
+            translatedTo = profile?.language;
+
+        let apiUrl = `https:api.mymemory.translated.net/get?q=${message.text}&langpair=${message?.language}|${translatedTo}`;
+
+        // console.log(translatedFrom, translatedTo)
 
         const getTransalte = async () => {
+
             try {
-                const response = await fetch(`${apiUrl}`)
-                const json = await response.json();
 
-                // console.log(json.responseData.translatedText)
-                // console.log(JSON.stringify(json.matches[1].translation))
-                const data = await json.responseData.translatedText
+                if (translatedTo === message?.language) {
+                    setTranslatedText(message?.text)
+                }
+                else {
 
-                // console.log(json.responseData.translatedText)
+                    const response = await fetch(`${apiUrl}`)
+                    const json = await response.json();
 
-                // setTranslatedMessage(prev => [...prev, data])
-                // console.log(data)
-                // return json.matches[1].translation;
-                console.log(data)
-                setTranslatedText(data)
+                    // console.log(json.responseData.translatedText)
+                    // console.log(JSON.stringify(json.matches[1].translation))
+                    const data = await json.responseData.translatedText
+
+                    // console.log(json.responseData.translatedText)
+
+                    // setTranslatedMessage(prev => [...prev, data])
+                    // console.log(data)
+                    // return json.matches[1].translation;
+                    // console.log(data)
+                    setTranslatedText(data)
+                }
 
             } catch (error) {
                 console.log('Error while calling get message API ', error);

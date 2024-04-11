@@ -17,6 +17,9 @@ const MessageSchema = new Schema({
     },
     type: {
         type: String
+    },
+    language: {
+        type: String
     }
 },
     {

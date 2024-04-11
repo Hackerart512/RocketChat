@@ -46,3 +46,12 @@ ul.profile-hover-sidebar{
 .bottom-icon{
     width:17px
 }
+
+
+#selectInput{
+    width: 182px;
+    border: 1px solid;
+    padding: 7px;
+    height: 36px;
+    width: 156px;
+}
