@@ -157,14 +157,12 @@ const ChatBox = ({ person, conversation }) => {
 
             </div>
 
-            <div className="w-[70%] chat-send-container p-4 position-fixed bottom-[0px] bg-white">
+            <div className="chat-send-container p-4 position-fixed bottom-[0px] bg-white">
 
                 <div className="chat-send-innerbox shadow-sm border-[1px]  h-[50px] rounded-[88px] flex items-center justify-center">
 
                     <form className="flex items-center justify-between w-[100%]">
                         <div className='left-side-sendbox'>
-
-
                             <SentimentSatisfiedAlt className="fa-smile" style={{ fontSize: '25px' }} />
 
                             <AttachFile style={{ fontSize: '20px' }} />

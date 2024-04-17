@@ -1,5 +1,5 @@
 .sidebar {
-        position: fixed;
+    position: fixed;
     left: 0px;
     top: 0px;
     width: 81px;
@@ -18,7 +18,7 @@ ul>li.main-li {
     padding: 9px 11px;
     margin: 27px 0;
     border-radius: 3px;
- 
+
 }
 
 ul {
@@ -26,32 +26,74 @@ ul {
     padding: 0px;
 }
 
-ul.profile-hover-sidebar{
+ul.profile-hover-sidebar {
     position: absolute;
     bottom: 28px;
     left: 51px;
     background: white;
- 
+
     padding: 10px 23px;
     width: 150px;
 }
 
-.sidebar-icons{
+.sidebar-icons {
     color: red;
     /* background-color: var(--themeColor); */
     font-size: 14px;
-    filter: hue-rotate(200deg); 
+    filter: hue-rotate(200deg);
 }
 
-.bottom-icon{
-    width:17px
+.bottom-icon {
+    width: 17px
 }
 
 
-#selectInput{
+#selectInput {
     width: 182px;
     border: 1px solid;
     padding: 7px;
     height: 36px;
     width: 156px;
+}
+
+
+@media only screen and (max-width:800px) {
+    .sidebar {
+        bottom: 0px;
+        width: 100%;
+
+        flex-direction: row;
+        height: 14vh;
+        top: auto
+    }
+
+    .logo {
+        flex-direction: row;
+    }
+
+    .first-menu>ul {
+        flex-direction: row;
+        display: flex;
+        margin-left: 19px;
+    }
+
+    .first-menu>ul>li.main-li {
+        margin: 4px;
+    }
+
+    .sidebar-menu {
+        box-shadow: none;
+        padding: 10px 15px;
+    }
+
+    .logo>img {
+        display: none;
+    }
+
+    #slider-scroll {
+        height: 85vh;
+    }
+    ul.profile-hover-sidebar {
+        
+    }
 }

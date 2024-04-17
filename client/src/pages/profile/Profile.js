@@ -52,6 +52,15 @@ const Profile = () => {
                         </form>
                     </div>
 
+                    <div className="showEditProfile flex items-center justify-between px-2">
+                        <div>
+
+                        </div>
+                        <div className='editsetting'>
+                            <h5 className="mt-3 text-[#5a078b] mb-1 text-[10px] font-semibold">Edit Settings</h5>
+                        </div>
+                    </div>
+
 
                     <div className="profile-card mt-3">
                         <div className="profile-cover text-center mb-3">
@@ -82,8 +91,8 @@ const Profile = () => {
                                 </span>
                             </label>
                             <h5 className="mt-3 profile-name mb-1">Rocket chat</h5>
-                            {!(account || account?.email)?
-                                 <p className="profile-email mb-1"> </p>
+                            {!(account || account?.email) ?
+                                <p className="profile-email mb-1"> </p>
                                 :
                                 <p className="profile-email mb-1">{account?.email}</p>
                             }
@@ -93,7 +102,7 @@ const Profile = () => {
                         <div className="profile-info">
                             <div className="text-center mb-4">
                                 <p className="info-title mb-0">Phone</p>
-                                {!(profile || profile?.phoneNumber)?
+                                {!(profile || profile?.phoneNumber) ?
                                     <span className="info-text">+91 </span>
                                     :
                                     <span className="info-text">+91 {profile?.phoneNumber}</span>
@@ -102,7 +111,7 @@ const Profile = () => {
                             </div>
                             <div className="text-center mb-4">
                                 <p className="info-title mb-0">Nick Name</p>
-                                {!(profile || profile?.fullName )?
+                                {!(profile || profile?.fullName) ?
                                     <span className="info-text"> </span>
                                     :
                                     <span className="info-text">{profile?.fullName}</span>
@@ -111,7 +120,7 @@ const Profile = () => {
                             </div>
                             <div className="text-center mb-4">
                                 <p className="info-title mb-0">Email</p>
-                                {!(account || account?.email )?
+                                {!(account || account?.email) ?
                                     <span className="info-text"> </span>
                                     :
                                     <span className="info-text">{account?.email}</span>

@@ -3,12 +3,12 @@
 httpsdreamschat.dreamstechnologies.comtemplate-htmltemplate2index.html#
 
 
-meterial using.
+Meterial using.
 npm install @material-ui/icons --legacy-peer-deps
 npm install @material-ui/core --legacy-peer-deps
 
                                      <-: NOTE :->
-Hello my team member you are not able to run this project in your laptop then you follow these step with me.
+Hello my team member, If you are not able to run this project in your laptop then you follow these step with me.
 
 1. first off all run ' npm install ' commands.
 2. if it's give lot of error then you run ' npm install --legacy-deps '.
