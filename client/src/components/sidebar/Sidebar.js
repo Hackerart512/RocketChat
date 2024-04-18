@@ -1,7 +1,7 @@
 import React from 'react';
 import "./sidebar.css";
 import { useNavigate, Link } from 'react-router-dom';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import ChatIcon from '@material-ui/icons/Chat';
 import { LibraryBooks } from '@material-ui/icons';
 import PersonAddAltIcon from '@material-ui/icons/PowerSettingsNew';
@@ -19,12 +19,29 @@ import { useSocket } from "../../context/SocketProvider";
 
 const SIdebar = () => {
 
-    const { logout, setLogout, profile,  setMyLanguage } = useSocket();
+    const { logout, setLogout, profile, setMyLanguage } = useSocket();
 
     let navigate = useNavigate();
 
     const [toggleProfileClick, setToggleProfileClick] = useState(false);
     const [toggleLaguageClick, setToggleLaguageClick] = useState(false);
+
+    const profileRef = useRef();
+
+    // After outside click
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (profileRef.current && !profileRef.current.contains(event.target)) {
+                setToggleProfileClick(false);
+            }
+        };
+
+        document.addEventListener("mousedown", handleClickOutside);
+
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutside);
+        };
+    }, []);
 
     const logoutUser = async () => {
         await localStorage.removeItem('token');
@@ -49,7 +66,7 @@ const SIdebar = () => {
 
     const updateLanguageDetails = async () => {
         const formData = new FormData();
-        formData.append('language',  selectInput);
+        formData.append('language', selectInput);
 
         const response = await fetch('http://localhost:5000/api/profile/updateprofile', {
             method: 'PUT',
@@ -98,7 +115,7 @@ const SIdebar = () => {
                                         <option value="en">
                                             <div className='cursor-pointer flex items-center justify-between my-2'>
                                                 <div>
-                                                    English
+                                                    Select Languages
                                                 </div>
                                                 <div>
                                                     <Public style={{ fontSize: '17px' }} />
@@ -216,7 +233,7 @@ const SIdebar = () => {
                     <div className="second-menu mb-3">
                         <ul>
 
-                            <li className="relative">
+                            <li className="relative" ref={profileRef}>
 
                                 {!profile ?
                                     <img onClick={toggleProfile} className='rounded-full cursor-pointer' src="/images/avatar-13.jpg" alt="img..."></img>
@@ -227,24 +244,28 @@ const SIdebar = () => {
                                 {/* <img onClick={toggleProfile} className='rounded-full cursor-pointer' src="/images/avatar-13.jpg" alt="img..."></img> */}
 
                                 <ul className={`${toggleProfileClick ? 'block' : 'none'}  cursor-pointer profile-hover-sidebar shadow-sm`}>
-                                    <Link className='cursor-pointer flex items-center justify-between ' to="profile">
+                                    <Link className='cursor-pointer flex items-center justify-between ' to="/profile">
                                         <li className='cursor-pointer flex items-center justify-between my-2'>
                                             <div>
                                                 Profile
                                             </div>
                                             <div>
-                                                <Public className='' style={{ fontSize: '17px' }} />
+                                                <Public className='mx-5' style={{ fontSize: '17px' }} />
                                             </div>
                                         </li>
                                     </Link>
-                                    <li className='cursor-pointer flex  items-center justify-between my-2'>
-                                        <div>
-                                            Settings
-                                        </div>
-                                        <div>
-                                            <Settings style={{ fontSize: '17px' }} />
-                                        </div>
-                                    </li>
+                                    <Link className='cursor-pointer flex items-center justify-between ' to="/profile">
+                                        <li className='cursor-pointer flex items-center justify-between my-2'>
+                                            <div>
+                                               Setting
+                                            </div>
+                                            <div className="">
+                                            
+                                                <Settings  className='mx-4' style={{ fontSize: '17px' }} />
+                                            </div>
+                                        </li>
+                                    </Link>
+                                   
                                     <li onClick={logoutUser} className='flex items-center justify-between my-2 cursor-pointer'>
                                         <div className='text-[red]'>
                                             Logout

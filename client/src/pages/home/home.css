@@ -164,15 +164,19 @@
 }
 
 @media only screen and (max-width:801px) {
-    #slider-scroll{
-        margin-left:0px;
-        width:100%;
-    }
-}
-@media only screen and (max-width:992px) {
-    #slider-scroll{
-        /* margin-left:0px; */
-        width:100%;
+    #slider-scroll {
+        margin-left: 0px;
+        width: 100%;
     }
 }
 
+@media only screen and (max-width:992px) {
+    #slider-scroll {
+        /* margin-left:0px; */
+        width: 100%;
+    }
+
+    .showEditProfile {
+        display: block;
+    }
+}

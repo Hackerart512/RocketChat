@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import SIdebar from '../../components/sidebar/Sidebar';
 import "./profile.css"
-
+import { Link } from 'react-router-dom';
 import { useSocket } from "../../context/SocketProvider";
 import { Search } from '@material-ui/icons';
 import GenerateTab from '../../components/general_tab/GenerateTab';
@@ -23,8 +23,14 @@ const Profile = () => {
 
     const [activeTab, setActiveTab] = useState('tab1');
 
+    const [setting ,setSeting] = useState(false);
+
     const handleTabClick = (tab) => {
         setActiveTab(tab);
+    }
+
+    const handleEnditSetting = () => {
+        setSeting(!setting);
     }
 
     return (
@@ -33,7 +39,7 @@ const Profile = () => {
 
                 <SIdebar />
 
-                <div id="slider-scroll" className="sidebar-group ml-[83px] p-3  w-[407px] bg-[#fafbff] overflow-y-scroll h-[100vh]">
+                <div style={{display:`${setting===true?'none':''}`}} id="slider-scroll" className={`sidebar-group ml-[83px] p-3   bg-[#fafbff] overflow-y-scroll h-[100vh]`}>
                     {/* top header components */}
                     <div className="flex justify-between items-center px-2">
                         <div className="uppercase  text-[12px] text-[--themeColor] font-extrabold">profile </div>
@@ -57,7 +63,8 @@ const Profile = () => {
 
                         </div>
                         <div className='editsetting'>
-                            <h5 className="mt-3 text-[#5a078b] mb-1 text-[10px] font-semibold">Edit Settings</h5>
+                            {/* <Link to=""></Link> */}
+                            <h5 onClick={handleEnditSetting} className="mt-3 text-[#5a078b] mb-1 text-[13px] font-semibold">Edit Settings</h5>
                         </div>
                     </div>
 
@@ -138,14 +145,14 @@ const Profile = () => {
                     </div>
                 </div>
 
-                <div className="chat w-[75vw]   overflow-y-scroll">
-                    <div className="chat settings-main p-3" id="middle" >
+                <div style={{display:`${setting===true?'block':''}`}} className={`chat-unactive chat w-[75vw] overflow-y-scroll`}>
+                    <div style={{display:`${setting===true?'block':''}`}} className={`chat settings-main p-3 ${setting===true?'ml-[77px]':''}`} id="middle" >
                         <div className="slimScrollDiv"  >
                             <div className="slimscroll" style={{ width: "100%", height: "650px" }}>
                                 <div className="page-header d-flex align-items-center">
                                     <div className="me-3 d-md-block d-lg-none">
                                         <a className="text-muted px-0 left_side" href="#">
-                                            <i className="fas fa-arrow-left"></i>
+                                            <i onClick={handleEnditSetting} className="fas fa-arrow-left"></i>
                                         </a>
                                     </div>
                                     <div className='flex items-start justify-center flex-col'>

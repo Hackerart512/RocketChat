@@ -3,11 +3,8 @@ import "./home.css";
 import Sidebar from '../../components/sidebar/Sidebar';
 import ChatCard from '../../components/chat_card/ChatCard';
 import Header from '../../components/header/Header';
-
 import { useSocket } from "../../context/SocketProvider";
 import AddFriend from '../../components/add_friend/AddFriend';
-// import AccessAlarmIcon from '@mui/icons-material/AccessAlarm';
-
 import { getContactList } from '../../api/Api'
 import ChatBox from '../../components/chat_box/ChatBox';
 import { useNavigate } from 'react-router-dom';
@@ -149,7 +146,7 @@ const Home = () => {
                     </div>
                 </div>
 
-                <div className="chat w-[75vw]  overflow-y-scroll" ref={scrollRef} >
+                <div className="chat w-[75vw] h-[82vh] overflow-y-scroll" ref={scrollRef} >
 
                     {
                         Object.keys(person).length ? <Header person={person} /> : null

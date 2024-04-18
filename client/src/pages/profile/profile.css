@@ -4406,3 +4406,18 @@
  .avatar-img{
     border:1px solid #dbdbdb ;
  }
+
+
+
+ /* ------------------------- */
+ .showEditProfile{
+    display: none;
+ } 
+
+ 
+@media only screen and (max-width:992px) {
+
+    .showEditProfile {
+        display: flex;
+    }
+}
