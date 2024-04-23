@@ -14,3 +14,5 @@ Hello my team member, If you are not able to run this project in your laptop the
 2. if it's give lot of error then you run ' npm install --legacy-deps '.
 3. other wises you can install one by one module using 'npm install module_name'  command.
 4. here you can your material-ui is not install using simple npm install then you run ' npm     install @material-ui/core --legacy-peer-deps ' this type of command.
+
+emoji-picker 

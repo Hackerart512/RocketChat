@@ -150,6 +150,27 @@ export const updatePassword = async (data) => {
     }
 }
 
+// Delete accont
+export const DeleteAccount = async () => {
+    try {
+        const response = await fetch(`${url}/api/auth/delete-account`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+                'auth-token': `${localStorage.getItem('token')}`,
+            }
+        })
+        const json = await response.json();
+        // console.log(json)
+        return json;
+    } catch (error) {
+        console.log('Error while calling get message API ', error);
+    }
+}
+
+
+
+
 //////////////////////////////////////////
 // export const addUser = async (data) => {
 //     try {

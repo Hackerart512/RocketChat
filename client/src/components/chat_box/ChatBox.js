@@ -3,7 +3,7 @@ import WrittenChatCard from '../written_chat_card/WrittenChatCard'
 import { useSocket } from "../../context/SocketProvider";
 import { newMessage, getMessage } from "../../api/Api"
 import { AttachFile, Send, SentimentSatisfiedAlt } from '@material-ui/icons';
-import { getTranslate } from '../../api/Api';
+import UserProfile from '../../components/user_profile/UserProfile';
 
 const ChatBox = ({ person, conversation }) => {
 
@@ -94,15 +94,9 @@ const ChatBox = ({ person, conversation }) => {
     }
 
     useEffect(() => {
-        // const getMessageDetails = async () => {
-        //     let data = await getMessage(conversation._id);
-        //     console.log(data);
-        // }
-
         const getMessageDetails = async () => {
             if (conversation && conversation._id) {
                 let data = await getMessage(conversation._id);
-                // console.log(data);
                 setChatMessages(data)
             }
         };
@@ -112,40 +106,10 @@ const ChatBox = ({ person, conversation }) => {
         }
     }, [person._id, conversation, toggle]);
 
-    // useEffect(() => {
-    //     const getTranslateDetails = async () => {
-    //         const data = await getTranslate({ msg: 'what are you doing', target: 'en' })
-    //         console.log(data)
-    //     }
-    //     getTranslateDetails();
-
-    // }, [person]);
-
-
-    // useEffect(() => {
-    // const getTranslateDetails = async () => {
-    //     const data = await getTranslate({ msg: 'आप क्या कर रहे', target: 'fr' })
-    //     console.log(data)
-    // }
-    // getTranslateDetails();
-
-    //     console.log(chatMessages);
-
-    // }, [person])
-
 
     return (
         <>
             <div className="chatting-container p-4 h-[76vh] ">
-                {/* <WrittenChatCard /> */}
-                {/* <WrittenChatCard sender={true} name="nitin" message="Vo hi kr rha" />
-                <WrittenChatCard name="pavan" message="ss bhej group me kitna kiya" />
-
-                <WrittenChatCard sender={true} name="nitin" message="Krta hu" />
-                <WrittenChatCard name="pavan" message="Kab krega bhai" />
-                
-            <WrittenChatCard sender={true} name="nitin" message="hmm" /> */}
-
                 {
                     chatMessages && chatMessages.map(msg => {
                         return (
@@ -153,14 +117,10 @@ const ChatBox = ({ person, conversation }) => {
                         )
                     })
                 }
-
-
             </div>
 
             <div className="chat-send-container p-4 position-fixed bottom-[0px] bg-white">
-
                 <div className="chat-send-innerbox shadow-sm border-[1px]  h-[50px] rounded-[88px] flex items-center justify-center">
-
                     <form className="flex items-center justify-between w-[100%]">
                         <div className='left-side-sendbox'>
                             <SentimentSatisfiedAlt className="fa-smile" style={{ fontSize: '25px' }} />

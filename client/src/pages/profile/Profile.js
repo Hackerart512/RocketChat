@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import SIdebar from '../../components/sidebar/Sidebar';
 import "./profile.css"
-import { Link } from 'react-router-dom';
 import { useSocket } from "../../context/SocketProvider";
 import { Search } from '@material-ui/icons';
 import GenerateTab from '../../components/general_tab/GenerateTab';

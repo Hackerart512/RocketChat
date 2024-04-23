@@ -29,12 +29,12 @@ router.put('/updateprofile', fetchuser, upload.single('profilePic'), async funct
 
     let success = false;
 
-    console.log(req.body);
-    console.log(req.file)
+    // console.log(req.body);
+    // console.log(req.file)
 
     const { profilePic, fullName, nickName, phoneNumber, location, bio, language, facebook, twitter, youtube, instagram, linkedin } = req.body;
 
-    console.log(profilePic)
+    // console.log(profilePic)
 
     try {
 

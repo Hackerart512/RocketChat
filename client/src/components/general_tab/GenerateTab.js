@@ -1,6 +1,14 @@
 import React, { useEffect, useState } from 'react'
+import { DeleteAccount} from "../../api/Api"
+import { useNavigate } from 'react-router-dom';
+import { useSocket } from "../../context/SocketProvider";
 
 const GenerateTab = ({ activeTab, setUpdate, update }) => {
+
+
+    const { logout, setLogout} = useSocket();
+
+    let navigate = useNavigate();
 
     // react hook
     // const [generlFormData, setGeneralFormData] = useState({});
@@ -68,7 +76,6 @@ const GenerateTab = ({ activeTab, setUpdate, update }) => {
         }
     }
 
-
     const handleChange = (event) => {
         // console.log(event.target.value, event.target.name);
         const { name, value } = event.target;
@@ -90,8 +97,25 @@ const GenerateTab = ({ activeTab, setUpdate, update }) => {
 
 
     useEffect(() => {
-        console.log(generlFormData);
+        // console.log(generlFormData);
     }, [generlFormData])
+
+
+    const handleDeleteAccount = async ()=>{
+
+          let response =  await DeleteAccount()
+
+          if(response.success){
+             navigate("/login")
+             
+             await localStorage.removeItem('token');
+             setLogout(!logout)
+             navigate("/login")
+
+             window.alert("Account has been deleted!")
+          }
+
+    }
 
     return (
         <>
@@ -251,7 +275,7 @@ const GenerateTab = ({ activeTab, setUpdate, update }) => {
                                 be recoverable once completed.</p>
                         </div>
                         <div className="col-md-4">
-                            <button type="button" className="btn btn-delete   ">
+                            <button onClick={handleDeleteAccount} type="button" className="btn btn-delete   ">
                                 Delete Account
                             </button>
                         </div>

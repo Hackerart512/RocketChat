@@ -12,6 +12,8 @@ import { getConversation } from "../../api/Api"
 import OnlineStatus from '../../components/online_status/OnlineStatus';
 import { Search, Toll } from '@material-ui/icons';
 import EmptyChat from '../../components/empty_chat/EmptyChat';
+import UserProfile from '../../components/user_profile/UserProfile';
+
 
 const Home = () => {
 
@@ -26,6 +28,8 @@ const Home = () => {
 
 
     const [modalActive, setModalActive] = useState(false);
+
+    const [profileActive, setProfileActive] = useState(false);
 
     const [ContactList, setContactList] = useState([]);
 
@@ -45,6 +49,10 @@ const Home = () => {
         return setModalActive(!modalActive);
     }
 
+    const handleProfilePopup = ()=>{
+        return setProfileActive(!profileActive);
+    }
+
     useEffect(() => {
         const getContactListDetails = async () => {
             let data = await getContactList();
@@ -52,7 +60,7 @@ const Home = () => {
 
             let filterContact;
             if (data.contactLists) {
-                  filterContact = data.contactLists.filter(contact => contact.name.toLowerCase().
+                filterContact = data.contactLists.filter(contact => contact.name.toLowerCase().
                     includes(text.toLowerCase()))
             }
 
@@ -93,7 +101,7 @@ const Home = () => {
         <>
             <div className="main-wrapper ">
 
-                <Sidebar  modalActiveFunction={modalActiveFunction}  />
+                <Sidebar modalActiveFunction={modalActiveFunction} />
 
                 <div id="slider-scroll" className={`sidebar-group ml-[83px] p-3  w-[407px] bg-[#fafbff] overflow-y-scroll h-[100vh]  ${modalActive ? 'z-[1]' : 'z-[-1]'}`}>
                     {/* top header components */}
@@ -105,7 +113,7 @@ const Home = () => {
 
                                 <li onClick={modalActiveFunction} className=""><i className="fa-solid fa-plus text-[--themeColor] mx-1 text-[12px] border-[#f3f3f3] border-[1px] p-1 rounded-sm cursor-pointer" ></i></li>
 
-                                {modalActive && <AddFriend onClick={modalActiveFunction}  setModalActive={setModalActive} />}
+                                {modalActive && <AddFriend onClick={modalActiveFunction} setModalActive={setModalActive} />}
                             </ul>
                         </div>
                     </div>
@@ -144,19 +152,25 @@ const Home = () => {
                             })
                         }
                     </div>
-                </div>
 
-                <div className="chat w-[75vw] h-[82vh] overflow-y-scroll" ref={scrollRef} >
-
-                    {
-                        Object.keys(person).length ? <Header person={person} /> : null
-                    }
-                    {
-                        Object.keys(person).length ? <ChatBox person={person} conversation={conversation} /> : <EmptyChat />
-                    }
 
                 </div>
 
+                <div className="chat w-[75vw] h-[82vh] overflow-y-scroll flex" ref={scrollRef} >
+
+                    <div className='w-[100%]'>
+                        {
+                            Object.keys(person).length ? <Header person={person}  onClick={handleProfilePopup} /> : null
+                        }
+                        {
+                            Object.keys(person).length ? <ChatBox person={person} conversation={conversation}/> : <EmptyChat />
+                        }
+                    </div>
+
+
+                </div>
+
+                <UserProfile onClick={handleProfilePopup} profileActive={profileActive} person={person} />
 
             </div>
         </>
