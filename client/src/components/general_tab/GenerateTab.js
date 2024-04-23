@@ -4,9 +4,9 @@ const GenerateTab = ({ activeTab, setUpdate, update }) => {
 
     // react hook
     // const [generlFormData, setGeneralFormData] = useState({});
-    
-     // react hook
-     const [generlFormData, setGeneralFormData] = useState({
+
+    // react hook
+    const [generlFormData, setGeneralFormData] = useState({
         fullName: '',
         phoneNumber: '',
         nickName: '',
@@ -26,6 +26,11 @@ const GenerateTab = ({ activeTab, setUpdate, update }) => {
         formData.append('nickName', generlFormData.nickName);
         formData.append('location', generlFormData.location);
         formData.append('bio', generlFormData.bio);
+        formData.append('facebook', generlFormData.facebook);
+        formData.append('twitter', generlFormData.twitter);
+        formData.append('linkedin', generlFormData.linkedin);
+        formData.append('instagram', generlFormData.instagram);
+        formData.append('youtube', generlFormData.youtube);
         formData.append('profilePic', generlFormData.profilePic); // Append the file
 
         const response = await fetch('http://localhost:5000/api/profile/updateprofile', {
@@ -45,7 +50,12 @@ const GenerateTab = ({ activeTab, setUpdate, update }) => {
             nickName: '',
             profilePic: null,
             location: '',
-            bio: ''
+            bio: '',
+            facebook:'',
+            twitter:'',
+            instagram:'',
+            youtube:'',
+            linkedin:''
         });
 
         if (json.success) {
@@ -91,8 +101,8 @@ const GenerateTab = ({ activeTab, setUpdate, update }) => {
                     <p>Update your account details</p>
                 </div>
                 <div className="settings-control p-3">
-                    <div className="form-col form-body">
-                        <form onSubmit={handleGeneralSubmit} method="put" action="http://localhost:5000/api/profile/updateprofile" enctype='multipart/form-data'>
+                    <form onSubmit={handleGeneralSubmit} method="put" action="http://localhost:5000/api/profile/updateprofile" enctype='multipart/form-data'>
+                        <div className="form-col form-body">
                             <div className="row">
                                 <div className="col-md-6 col-xl-4">
                                     <div className="form-group">
@@ -151,7 +161,7 @@ const GenerateTab = ({ activeTab, setUpdate, update }) => {
                                 </div>
                             </div>
 
-                            <div className="form-row profile_form m-0 align-items-center">
+                            {/* <div className="form-row profile_form m-0 align-items-center">
                                 <div className="me-4">
                                     <button type="submit" className="bg-[#420ba1]   mb-0 btn update-btn" >
                                         Update Details
@@ -161,70 +171,77 @@ const GenerateTab = ({ activeTab, setUpdate, update }) => {
                                     <a href="#" data-bs-dismiss="modal"
                                         aria-label="Close">Cancel</a>
                                 </div>
-                            </div>
-                        </form>
-                    </div>
-                    <hr className='my-4'></hr>
-                    <div className="social-settings  ">
-                        <h4 className="text-left my-3">Social Links</h4>
-                        <div className="form-col form-body">
-                            <form>
+                            </div> */}
+                        </div>
+                        <hr className='my-4'></hr>
+
+                        <div className="social-settings  ">
+                            <h4 className="text-left my-3">Social Links</h4>
+                            <div className="form-col form-body">
+
                                 <div className="row">
                                     <div className="col-md-6 col-xl-4">
                                         <div className="form-group">
                                             <input
+                                            onChange={handleChange}
                                                 className="form-control form-control-lg group_formcontrol"
                                                 name="facebook" type="text"
-                                                placeholder="Facebook Link" />
+                                                placeholder="Facebook Link"value={generlFormData.facebook} />
                                         </div>
                                     </div>
                                     <div className="col-md-6 col-xl-4">
                                         <div className="form-group">
                                             <input
+                                            onChange={handleChange}
                                                 className="form-control form-control-lg group_formcontrol"
                                                 name="twitter" type="text"
-                                                placeholder="Twitter Link" />
+                                                placeholder="Twitter Link" value={generlFormData.twitter}/>
                                         </div>
                                     </div>
                                     <div className="col-md-6 col-xl-4">
                                         <div className="form-group">
                                             <input
+                                            onChange={handleChange}
                                                 className="form-control form-control-lg group_formcontrol"
                                                 name="instagram" type="text"
-                                                placeholder="Instagram Link" />
+                                                placeholder="Instagram Link" value={generlFormData.instagram} />
                                         </div>
                                     </div>
                                     <div className="col-md-6 col-xl-4">
                                         <div className="form-group">
                                             <input
+                                            onChange={handleChange}
                                                 className="form-control form-control-lg group_formcontrol"
                                                 name="linkedin" type="text"
-                                                placeholder="Linkedin Link" />
+                                                placeholder="Linkedin Link" value={generlFormData.linkedin} />
                                         </div>
                                     </div>
                                     <div className="col-md-6 col-xl-4">
                                         <div className="form-group">
                                             <input
+                                            onChange={handleChange}
                                                 className="form-control form-control-lg group_formcontrol"
                                                 name="youtube" type="text"
-                                                placeholder="Youtube Link" />
+                                                placeholder="Youtube Link" value={generlFormData.youtube} />
                                         </div>
                                     </div>
                                 </div>
-                                <div className="form-row profile_form m-0 align-items-center">
-                                    <div className="me-4">
-                                        <button type="submit" className="bg-[#420ba1]   mb-0 btn update-btn" >
-                                            Update Details
-                                        </button>
-                                    </div>
-                                    <div className="cancel-btn">
-                                        <a href="#" data-bs-dismiss="modal"
-                                            aria-label="Close">Cancel</a>
-                                    </div>
-                                </div>
-                            </form>
+
+                            </div>
                         </div>
-                    </div>
+
+                        <div className="form-row profile_form m-0 align-items-center">
+                            <div className="me-4">
+                                <button type="submit" className="bg-[#420ba1]   mb-0 btn update-btn" >
+                                    Update Details
+                                </button>
+                            </div>
+                            <div className="cancel-btn">
+                                <a href="#" data-bs-dismiss="modal"
+                                    aria-label="Close">Cancel</a>
+                            </div>
+                        </div>
+                    </form>
                 </div>
                 <div className="settings-delete py-4">
                     <div className="row align-items-center justify-content-between ">

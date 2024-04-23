@@ -93,7 +93,64 @@ ul.profile-hover-sidebar {
     #slider-scroll {
         height: 85vh;
     }
-    ul.profile-hover-sidebar {
-        
-    }
+
+    ul.profile-hover-sidebar {}
+}
+
+
+/* ............................ */
+
+/* Tooltip container */
+.main-li {
+    /* position: relative; */
+    /* display: inline-block; */
+}
+
+/* Tooltip text */
+.main-li .tooltiptext {
+    top: 50%;
+    background-color: #420BA1;
+    box-shadow: 4px 4px 4px rgba(200, 198, 198, 0.25);
+    border-radius: 2px;
+    display: inline-block;
+    padding: 6px 19px;
+    color: #fff;
+    font-size: 12px;
+    -webkit-transform: translateY(-50%);
+    transition: ease all 0.5s;
+    -webkit-transition: ease all 0.5s;
+    /* width: 78px; */
+    height: 31px;
+    background-color: #5a078b;
+    text-align: center;
+    border-radius: 3px;
+    position: absolute;
+    z-index: 1;
+    bottom: 125%;
+    left: 115px;
+    margin-left: -60px;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+/* Tooltip arrow */
+.main-li .tooltiptext::after {
+    content: "";
+    position: absolute;
+    top: 31%;
+    left: -8%;
+    margin-left: -7px;
+    border-width: 7px;
+    border-style: solid;
+    border-color: transparent black transparent transparent;
+}
+
+/* Show the tooltip on hover */
+.main-li:hover .tooltiptext {
+    visibility: visible;
+    opacity: 1;
+}
+
+.main-li > a:hover {
+    color: #420ba1
 }

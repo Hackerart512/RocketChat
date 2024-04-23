@@ -17,7 +17,7 @@ import { useSocket } from "../../context/SocketProvider";
 
 // import UnarchiveIcon from '@mui/icons-material/Unarchive';
 
-const SIdebar = () => {
+const SIdebar = ({modalActiveFunction}) => {
 
     const { logout, setLogout, profile, setMyLanguage } = useSocket();
 
@@ -33,6 +33,7 @@ const SIdebar = () => {
         const handleClickOutside = (event) => {
             if (profileRef.current && !profileRef.current.contains(event.target)) {
                 setToggleProfileClick(false);
+                setToggleLaguageClick(false)
             }
         };
 
@@ -93,20 +94,28 @@ const SIdebar = () => {
                 <div className="logo mt-2 flex items-center justify-center flex-col">
                     <img className='' src="/images/logo.png"></img>
 
+                     
                     <div className="first-menu">
                         <ul className="">
-                            <li className=" main-li cursor-pointer"><Link to="/"><ChatIcon className='sidebar-icons' /></Link></li>
+                            <li className="text-[#570786]  main-li cursor-pointer relative "><Link to="/">
+                                <ChatIcon  />
+                                <span className='tooltiptext'>Chat</span>
+                            </Link></li>
 
-                            <li className="text-[#570786]  main-li cursor-pointer">
+
+                            <li className="text-[#570786]  main-li cursor-pointer relative">
                                 <LibraryBooks />
+                                <span className='tooltiptext'>Status</span>
                             </li>
 
-                            <li className="text-[#570786]  main-li cursor-pointer">
+                            <li className="text-[#570786]  main-li cursor-pointer relative "  onClick={modalActiveFunction}>
                                 <PersonAdd />
+                                <span className=' after:ml-[-5px] tooltiptext'>AddPerson</span>
                             </li>
 
-                            <li onClick={onLanguageToggle} className="text-[#570786]  main-li cursor-pointer relative">
+                            <li onClick={onLanguageToggle} className="text-[#570786]  main-li cursor-pointer relative" ref={profileRef}>
                                 <Public />
+                                {/* <span className='tooltiptext'>Languages</span> */}
 
                                 <div className={`${toggleLaguageClick ? 'block' : 'none'}  cursor-pointer profile-hover-sidebar shadow-sm left-[52px] top-[0px] absolute bg-white`}>
 
@@ -212,17 +221,14 @@ const SIdebar = () => {
                                                 </div>
                                             </div>
                                         </option>
-
-
                                     </select>
-
-
                                 </div>
                             </li>
 
-                            <li className="text-[#570786]  main-li cursor-pointer">
+                            <li className="text-[#570786]  main-li cursor-pointer relative">
                                 <Link to="/profile">
                                     <Settings />
+                                    <span className='absolute top-[9px] left-[53px] tooltiptext'>Settings</span>
                                 </Link>
                             </li>
                         </ul>
@@ -244,7 +250,7 @@ const SIdebar = () => {
                                 {/* <img onClick={toggleProfile} className='rounded-full cursor-pointer' src="/images/avatar-13.jpg" alt="img..."></img> */}
 
                                 <ul className={`${toggleProfileClick ? 'block' : 'none'}  cursor-pointer profile-hover-sidebar shadow-sm`}>
-                                    <Link className='cursor-pointer flex items-center justify-between ' to="/profile">
+                                    <Link className='cursor-pointer flex items-center justify-between hover:no-underline hover:text-[black]' to="/profile">
                                         <li className='cursor-pointer flex items-center justify-between my-2'>
                                             <div>
                                                 Profile
@@ -254,24 +260,23 @@ const SIdebar = () => {
                                             </div>
                                         </li>
                                     </Link>
-                                    <Link className='cursor-pointer flex items-center justify-between ' to="/profile">
+                                    <Link className='cursor-pointer flex items-center justify-between hover:no-underline hover:text-[black]' to="/profile">
                                         <li className='cursor-pointer flex items-center justify-between my-2'>
                                             <div>
-                                               Setting
+                                                Setting
                                             </div>
                                             <div className="">
-                                            
-                                                <Settings  className='mx-4' style={{ fontSize: '17px' }} />
+                                                <Settings className='ml-[42px]' style={{ fontSize: '17px' }} />
                                             </div>
                                         </li>
                                     </Link>
-                                   
+
                                     <li onClick={logoutUser} className='flex items-center justify-between my-2 cursor-pointer'>
                                         <div className='text-[red]'>
                                             Logout
                                         </div>
                                         <div>
-                                            <PersonAddAltIcon style={{ fontSize: '17px', color: "red" }} />
+                                            <PersonAddAltIcon style={{ fontSize: '17px', color: "red" }} className='ml-[42px]' />
                                         </div>
                                     </li>
 

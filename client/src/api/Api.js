@@ -128,6 +128,28 @@ export const getTranslate = async (data) => {
     }
 }
 
+// ------------------- Remaining --------------------------
+
+// Update password
+export const updatePassword = async (data) => {
+    try {
+        const response = await fetch(`${url}/api/auth/update-pass-word`, {
+            method: 'POST',
+            body: JSON.stringify(
+                data
+            ),
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        })
+        const json = await response.json();
+        console.log(json)
+        return json;
+    } catch (error) {
+        console.log('Error while calling get message API ', error);
+    }
+}
+
 //////////////////////////////////////////
 // export const addUser = async (data) => {
 //     try {

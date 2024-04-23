@@ -39,7 +39,8 @@ export const SocketProvider = (props) => {
 
   // console.log(account);
   useEffect(() => {
-    setMyLanguage(profile.language)
+    if (profile?.language)
+      setMyLanguage(profile?.language)
   }, [profile, account])
 
   useEffect(() => {

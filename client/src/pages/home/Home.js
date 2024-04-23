@@ -60,7 +60,7 @@ const Home = () => {
             // console.log(data.contactLists);
         }
         getContactListDetails();
-    }, [text])
+    }, [text, modalActive])
     // call  if whenever change text state....
 
     // useEffect(() => {
@@ -93,7 +93,7 @@ const Home = () => {
         <>
             <div className="main-wrapper ">
 
-                <Sidebar />
+                <Sidebar  modalActiveFunction={modalActiveFunction}  />
 
                 <div id="slider-scroll" className={`sidebar-group ml-[83px] p-3  w-[407px] bg-[#fafbff] overflow-y-scroll h-[100vh]  ${modalActive ? 'z-[1]' : 'z-[-1]'}`}>
                     {/* top header components */}
@@ -105,7 +105,7 @@ const Home = () => {
 
                                 <li onClick={modalActiveFunction} className=""><i className="fa-solid fa-plus text-[--themeColor] mx-1 text-[12px] border-[#f3f3f3] border-[1px] p-1 rounded-sm cursor-pointer" ></i></li>
 
-                                {modalActive && <AddFriend onClick={modalActiveFunction} />}
+                                {modalActive && <AddFriend onClick={modalActiveFunction}  setModalActive={setModalActive} />}
                             </ul>
                         </div>
                     </div>

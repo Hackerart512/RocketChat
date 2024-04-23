@@ -32,7 +32,12 @@ const userSchema = new Schema({
         phoneNumber: String,
         location:String,
         bio:String,
-        language:String
+        language:String,
+        facebook:String,
+        instagram:String,
+        youtube:String,
+        linkedin:String,
+        twitter:String,
     },
 
     date: {

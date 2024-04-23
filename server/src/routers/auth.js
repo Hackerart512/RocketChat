@@ -174,8 +174,8 @@ router.post('/follow', fetchuser, async (req, res) => {
         }
 
         const friendId = user._id;
-        const userContactList = await Contact.find({user: userId})
-       
+        const userContactList = await Contact.find({ user: userId })
+
         // console.log(account)
 
         if (account.contacts.includes(friendId)) {
@@ -273,5 +273,19 @@ router.get('/mycontact', fetchuser, async (req, res) => {
     } catch (err) { console.log(err); }
 });
 
+// Route:8 Delete Account logged in user details user POST "/api/auth/getuser" login required
+router.delete('/delete-account', fetchuser, async (req, res) => {
+    let success = false;
+    try {
+        var userid = req.user.id;
+
+        const user = await User.findByIdAndDelete(userid).select("-password");
+        let success = true;
+        res.json({success, user,message: "Account Deleted successfully"})
+        
+    } catch (e) {
+        res.status(500).json({success, message: "This is internal Error...." })
+    }
+})
 
 module.exports = router;
