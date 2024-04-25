@@ -48,6 +48,7 @@ const ChatBox = ({ person, conversation }) => {
 
     const sendText = async () => {
 
+
         let MessagesObject = {
             senderId: account._id,
             receiverId: person._id,
@@ -66,29 +67,13 @@ const ChatBox = ({ person, conversation }) => {
         // After toggle message will fatch
     }
 
-    const sendText2 = async (e) => {
-        const code = e.keyCode || e.which;
-        if(code === 13){
-          
-            let MessagesObject = {
-                senderId: account._id,
-                receiverId: person._id,
-                conversationId: conversation._id,
-                type: 'text',
-                text: message,
-                language: profile?.language
-            }
-    
-            socket.current.emit('sendMessage', MessagesObject);
-    
-            await newMessage(MessagesObject);
-    
-            setMessag("");
-            setToggle(!toggle);
-            // After toggle message will fatch
+    const handlePressEnter = (e) => {
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            e.stopPropagation();
+            sendText();
         }
-
-    }
+    };
 
     useEffect(() => {
         const getMessageDetails = async () => {
@@ -167,11 +152,18 @@ const ChatBox = ({ person, conversation }) => {
                             </label>
                             <input id="fileInput" className='none' type="file" onChange={onFileChnage}></input>
 
-                            <input value={message} onChange={(e) => setMessag(e.target.value)} className='mx-4 border-none outline-none' placeholder='Enter message...' type="text" />
+                            <input
+                                onKeyPress={handlePressEnter}
+                                value={message}
+                                onChange={(e) => setMessag(e.target.value)}
+                                className='mx-4 border-none outline-none'
+                                placeholder='Enter message...'
+                                type="text"
+                            />
                         </div>
 
                         <div className='right-side-sendbox'>
-                            <button onKeyPress={(e)=>sendText2(e)} onClick={sendText} type='button' className=' send-button rounded-full bg-[#ee00ab] text-white   m-1 p-[9px] flex items-center justify-center'>
+                            <button onClick={sendText} type='button' className=' send-button rounded-full bg-[#ee00ab] text-white   m-1 p-[9px] flex items-center justify-center' tabIndex="0">
                                 <Send />
                             </button>
                         </div>

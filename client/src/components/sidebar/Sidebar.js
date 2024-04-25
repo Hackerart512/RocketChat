@@ -33,7 +33,7 @@ const SIdebar = ({ modalActiveFunction }) => {
         const handleClickOutside = (event) => {
             if (profileRef.current && !profileRef.current.contains(event.target)) {
                 setToggleProfileClick(false);
-                setToggleLaguageClick(false)
+                // setToggleLaguageClick(false)
             }
         };
 
@@ -118,7 +118,7 @@ const SIdebar = ({ modalActiveFunction }) => {
                                 <span className=' after:ml-[-5px] tooltiptext'>AddPerson</span>
                             </li>
 
-                            <li onClick={onLanguageToggle} className="text-[#570786]  main-li cursor-pointer relative" ref={profileRef}>
+                            <li onClick={onLanguageToggle} className="text-[#570786]  main-li cursor-pointer relative"  >
                                 <Public />
                                 {/* <span className='tooltiptext'>Languages</span> */}
 

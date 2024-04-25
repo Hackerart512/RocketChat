@@ -109,10 +109,10 @@ const WrittenChatCard = ({ message }) => {
                             </div>
                         </div>
 
-                        <div className="messages">
+                        <div className="messages w-[70%]">
                             <div className="mx-3 message bg-[#5a078b] text-white flex flex-col items-start p-3 px-4">
                                 {/* <p className='text-white ' >{message.text}</p> */}
-                                <p className='text-white ' >{translatedText}</p>
+                                <p className='text-white text-left' >{translatedText}</p>
                                 <span className='text-white text-[11px]'><AccessTime style={{ fontSize: '11px' }} className='mr-1' /> {formateTimerFunc(message.createdAt)}</span>
                             </div>
                             <div className="mx-3 mt-1 text-left  text-[15px] text-[--themeColor] font-bold">
@@ -138,10 +138,10 @@ const WrittenChatCard = ({ message }) => {
                             </div>
                         </div>
 
-                        <div className="message">
+                        <div className="message w-[70%]">
                             <div className="mx-3 message2 bg-[#e7eefe]   flex flex-col items-start p-3 px-4">
                                 {/* <p >{message.text}</p> */}
-                                <p >{translatedText}</p>
+                                <p className='text-left'>{translatedText}</p>
 
                                 <span className=' text-[11px] flex   justify-center items-center'> <AccessTime style={{ fontSize: '11px' }} className='mr-1' /> {formateTimerFunc(message.createdAt)}</span>
                             </div>
