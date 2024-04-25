@@ -17,7 +17,7 @@ import { useSocket } from "../../context/SocketProvider";
 
 // import UnarchiveIcon from '@mui/icons-material/Unarchive';
 
-const SIdebar = ({modalActiveFunction}) => {
+const SIdebar = ({ modalActiveFunction }) => {
 
     const { logout, setLogout, profile, setMyLanguage } = useSocket();
 
@@ -92,23 +92,28 @@ const SIdebar = ({modalActiveFunction}) => {
         <>
             <div className="sidebar w-[100px]">
                 <div className="logo mt-2 flex items-center justify-center flex-col">
-                    <img className='' src="/images/logo.png"></img>
 
-                     
+                    <Link to="/">
+                        <img className='' src="/images/logo.png"></img>
+                    </Link>
+
+
                     <div className="first-menu">
                         <ul className="">
                             <li className="text-[#570786]  main-li cursor-pointer relative "><Link to="/">
-                                <ChatIcon  />
+                                <ChatIcon />
                                 <span className='tooltiptext'>Chat</span>
                             </Link></li>
 
 
-                            <li className="text-[#570786]  main-li cursor-pointer relative">
+                            <li className="text-[#570786]  main-li cursor-pointer relative "><Link to="/status">
                                 <LibraryBooks />
                                 <span className='tooltiptext'>Status</span>
-                            </li>
+                            </Link></li>
 
-                            <li className="text-[#570786]  main-li cursor-pointer relative "  onClick={modalActiveFunction}>
+
+
+                            <li className="text-[#570786]  main-li cursor-pointer relative " onClick={modalActiveFunction}>
                                 <PersonAdd />
                                 <span className=' after:ml-[-5px] tooltiptext'>AddPerson</span>
                             </li>

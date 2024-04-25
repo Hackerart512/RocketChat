@@ -83,8 +83,6 @@ const WrittenChatCard = ({ message }) => {
         }
 
         getTransalte()
-
-
         // console.log(getTransalte())
     }, [message])
 

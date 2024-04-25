@@ -298,7 +298,7 @@ router.put('/update-password', fetchuser,[
     const errors = validationResult(req);
 
     if (!errors.isEmpty()) {
-        return res.status(400).json({ errors: errors.array() });
+        return res.status(400).json({success, errors: errors.array(), message:"Password is too short" });
     }
 
     try {
@@ -313,12 +313,12 @@ router.put('/update-password', fetchuser,[
 
         if (!passwordCompare) {
             let success = false;
-            return res.status(400).json({ success, errors: "Incorrect Password !" });
+            return res.status(400).json({ success, message: "Incorrect Password !" });
         }
 
         if (!user) {
             let success = false;
-            return res.status(400).json({ success, errors: "User Not found !" });
+            return res.status(400).json({ success, message: "User Not found !" });
         }
 
         //Use bcrypt fucntion to generate hash not password store in database
@@ -333,7 +333,7 @@ router.put('/update-password', fetchuser,[
 
     } catch (e) {
         let success = false;
-        res.status(500).json({ success, message: "An Internal Error....", message: e.message })
+        res.status(500).json({ success, message: "An Internal Error...."})
     }
 })
 

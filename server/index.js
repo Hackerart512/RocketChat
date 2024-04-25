@@ -7,9 +7,11 @@ const connectToMogoose = require('./database');
 const app = express();
 app.use(express.json());
 app.use(cors());
+// app.use(cors({
+//     origin: 'http://localhost:3000'
+// }));
 
 // All Routes
-
 app.use('/api/auth', require('./src/routers/auth'))
 
 app.use('/api/conversation', require('./src/routers/conversation'))
@@ -88,7 +90,7 @@ io.on('connection', (socket) => {
         // console.log(data);
         const user = await getUser(data.receiverId);
         // console.log(user);
-    
+
         if (user && user.socketId) {
             io.to(user.socketId).emit('getMessage', data);
         } else {
