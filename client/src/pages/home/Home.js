@@ -145,7 +145,7 @@ const Home = () => {
                     <div className="chat-container px-2">
 
                         {
-                            ContactList.map((item) => {
+                            ContactList && ContactList.map((item) => {
                                 return (
                                     <ChatCard user={item} />
                                 )
