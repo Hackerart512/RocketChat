@@ -1,6 +1,7 @@
-const url = 'http://localhost:5000';
+// import BASE_URL from process.env.BASE_URL;
 
 
+const url = "http://localhost:5000";
 
 // Signup user 
 export const signUp = async (data) => {

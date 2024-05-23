@@ -1,7 +1,7 @@
 
 ****************** Piyush ( coders War ) it's my ui designing. **********************
-httpsdreamschat.dreamstechnologies.comtemplate-htmltemplate2index.html#
 
+httpsdreamschat.dreamstechnologies.comtemplate-htmltemplate2index.html#
 
 Meterial using.
 npm install @material-ui/icons --legacy-peer-deps
@@ -16,3 +16,12 @@ Hello my team member, If you are not able to run this project in your laptop the
 4. here you can your material-ui is not install using simple npm install then you run ' npm     install @material-ui/core --legacy-peer-deps ' this type of command.
 
 emoji-picker 
+
+-- local host react.js
+http://localhost:5000
+
+
+user :hacker
+password :hacker
+
+mongodb+srv://hacker:hacker@cluster0.ltt9gpg.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0u

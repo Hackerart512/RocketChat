@@ -15,17 +15,16 @@ import EmptyChat from '../../components/empty_chat/EmptyChat';
 import UserProfile from '../../components/user_profile/UserProfile';
 
 
+
 const Home = () => {
 
     let navigate = useNavigate();
-
 
     useEffect(() => {
         if (!localStorage.getItem('token')) navigate('/signup')
     }, [localStorage.getItem('token')])
 
     const { person, account } = useSocket();
-
 
     const [modalActive, setModalActive] = useState(false);
 
@@ -69,15 +68,13 @@ const Home = () => {
         }
         getContactListDetails();
     }, [text, modalActive])
-    // call  if whenever change text state....
 
+    // call  if whenever change text state....
     // useEffect(() => {
     //     const getConversationDetails = async () => {
-
     //         let data = await getConversation({ senderId: account._id, receiverId: person._id })
     //         // console.log(data, person._id, account._id);
     //         setConversation(data);
-
     //     }
     //     getConversationDetails()
     // }, [person._id])
@@ -144,15 +141,15 @@ const Home = () => {
                     {/* chats container */}
                     <div className="chat-container px-2">
 
-                        {
+                        {   
                             ContactList && ContactList.map((item) => {
                                 return (
                                     <ChatCard user={item} />
                                 )
                             })
                         }
+                        
                     </div>
-
 
                 </div>
 

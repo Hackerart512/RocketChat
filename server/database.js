@@ -1,7 +1,10 @@
 const express = require('express');
 const mongoose = require('mongoose');
 
-const mogooseURI = 'mongodb://127.0.0.1:27017/RocketChat';
+require('dotenv').config();
+
+
+const mogooseURI = `${process.env.MONGO_URL}`;
 
 mongoose.connect(mogooseURI, {});
 

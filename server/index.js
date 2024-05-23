@@ -4,6 +4,11 @@ const port = 5000;
 
 const connectToMogoose = require('./database');
 
+const BASE_URL = process.env.BASE_URL;
+const SERVER_URL = process.env.SERVER_URL;
+
+require('dotenv').config();
+
 const app = express();
 app.use(express.json());
 app.use(cors());
@@ -27,10 +32,8 @@ app.get("/", (req, res) => {
 })
 
 app.listen(port, () => {
-    console.log(`Listening on port: http:localhost:${port}`)
+    console.log(`Listening on port:  ${process.env.BASE_URL}`)
 });
-
-
 
 // ................... Socket IO ..........................
 
@@ -38,7 +41,7 @@ const { Server } = require('socket.io');
 
 const io = new Server(9000, {
     cors: {
-        ogirin: 'http://localhost:3000'
+        ogirin: `${BASE_URL}`
     }
 })
 
@@ -49,12 +52,12 @@ const addUser = (userData, socketId) => {
     // !users.some(user => user._id === userData._id) && users.push({ ...userData, socketId });
 
     if (!userData) {
-        console.error('User data is null');
+        // console.error('User data is null');
         return;
     }
 
     if (!userData._id) {
-        console.error('User data does not have an _id property');
+        // console.error('User data does not have an _id property');
         return;
     }
 
@@ -63,7 +66,7 @@ const addUser = (userData, socketId) => {
         // If not, add the user to the users array with the provided socketId
         users.push({ ...userData, socketId });
     } else {
-        console.error('User with the same _id already exists');
+        // console.error('User with the same _id already exists');
     }
 }
 

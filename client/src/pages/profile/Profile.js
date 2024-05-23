@@ -11,6 +11,7 @@ import SettingControl from '../../components/setting_control/SettingControl';
 import SettingFooter from '../../components/setting_footer/SettingFooter';
 import SocialNav from '../../components/social_nav/SocialNav';
 
+const BASE_URL = process.env.BASE_URL;
 
 const Profile = () => {
 
@@ -47,7 +48,7 @@ const Profile = () => {
         const formData = new FormData();
         formData.append('profilePic', generlFormData.profilePic); // Append the file
 
-        const response = await fetch('http://localhost:5000/api/profile/updateprofile', {
+        const response = await fetch(`${BASE_URL}/api/profile/updateprofile`, {
             method: 'PUT',
             body: formData,
             headers: {
